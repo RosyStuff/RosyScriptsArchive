@@ -1,2 +1,2 @@
-# RosyScriptsArchive
-if they are lost to time, here
+# RosyScripts
+you all want scripts here? cause yall got no discord? heres this pack
