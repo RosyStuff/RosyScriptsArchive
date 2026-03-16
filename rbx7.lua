@@ -27,7 +27,7 @@ local cLr = Instance.new("TextButton")
 
 RBX7.Name = "RBX7"
 RBX7.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-RBX7.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
 
 Frame.Parent = RBX7
 Frame.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -36,6 +36,7 @@ Frame.BorderSizePixel = 0
 Frame.Draggable = true
 Frame.Position = UDim2.new(0.159523815, -12, 0.157079652, 17)
 Frame.Size = UDim2.new(0, 511, 0, 306)
+Frame.Active = true
 
 TextLabel.Parent = Frame
 TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
