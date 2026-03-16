@@ -12,3 +12,4855 @@
                                         
 BY ROSYEXPLOITS
 ]]
+
+
+
+
+local RBX7 = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local CBox = Instance.new("TextBox")
+local eXe = Instance.new("TextButton")
+local cLr = Instance.new("TextButton")
+
+
+
+RBX7.Name = "RBX7"
+RBX7.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+RBX7.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = RBX7
+Frame.BackgroundColor3 = Color3.new(0, 0, 0)
+Frame.BorderColor3 = Color3.new(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Draggable = true
+Frame.Position = UDim2.new(0.159523815, -12, 0.157079652, 17)
+Frame.Size = UDim2.new(0, 511, 0, 306)
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+TextLabel.BorderColor3 = Color3.new(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 511, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "RBX7 - Executor Running in LuaU Executor"
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14
+TextLabel.TextStrokeColor3 = Color3.new(1, 1, 1)
+TextLabel.TextStrokeTransparency = 0
+TextLabel.TextWrapped = true
+
+CBox.Name = "CBox"
+CBox.Parent = Frame
+CBox.BackgroundColor3 = Color3.new(0, 0, 0)
+CBox.BorderColor3 = Color3.new(0, 0, 0)
+CBox.BorderSizePixel = 0
+CBox.Position = UDim2.new(-2.98606437e-08, 0, 0.163398698, 0)
+CBox.Size = UDim2.new(0, 510, 0, 206)
+CBox.ClearTextOnFocus = false
+CBox.Font = Enum.Font.SourceSans
+CBox.PlaceholderColor3 = Color3.new(0, 0, 0)
+CBox.PlaceholderText = "Paste in a script here"
+CBox.Text = ""
+CBox.TextColor3 = Color3.new(0, 0, 0)
+CBox.TextSize = 14
+CBox.TextStrokeColor3 = Color3.new(1, 1, 1)
+CBox.TextStrokeTransparency = 0
+CBox.TextXAlignment = Enum.TextXAlignment.Left
+CBox.TextYAlignment = Enum.TextYAlignment.Top
+
+eXe.Name = "eXe"
+eXe.Parent = Frame
+eXe.BackgroundColor3 = Color3.new(0, 0, 0)
+eXe.BorderColor3 = Color3.new(1, 1, 1)
+eXe.BorderSizePixel = 2
+eXe.Position = UDim2.new(0.0254403129, 0, 0.862745106, 0)
+eXe.Size = UDim2.new(0, 163, 0, 42)
+eXe.Font = Enum.Font.SourceSans
+eXe.Text = "Execute Script.lua"
+eXe.TextColor3 = Color3.new(0, 0, 0)
+eXe.TextScaled = true
+eXe.TextSize = 14
+eXe.TextStrokeColor3 = Color3.new(1, 1, 1)
+eXe.TextStrokeTransparency = 0
+eXe.TextWrapped = true
+eXe.MouseButton1Click:Connect(function()
+	local s = CBox.Text
+	require(Frame.ModuleScript).run(s)
+end)
+cLr.Name = "cLr"
+cLr.Parent = Frame
+cLr.BackgroundColor3 = Color3.new(0, 0, 0)
+cLr.BorderColor3 = Color3.new(1, 1, 1)
+cLr.BorderSizePixel = 2
+cLr.Position = UDim2.new(0.520547926, 0, 0.862745106, 0)
+cLr.Size = UDim2.new(0, 163, 0, 42)
+cLr.Font = Enum.Font.SourceSans
+cLr.Text = "Clear Script.lua"
+cLr.TextColor3 = Color3.new(0, 0, 0)
+cLr.TextScaled = true
+cLr.TextSize = 14
+cLr.TextStrokeColor3 = Color3.new(1, 1, 1)
+cLr.TextStrokeTransparency = 0
+cLr.TextWrapped = true
+cLr.MouseButton1Click:Connect(function()
+	CBox.Text = ""
+end)
+-- Module Scripts
+
+local fake_module_scripts = {}
+
+do -- Frame.ModuleScript
+	local script = Instance.new('ModuleScript', Frame)
+	local function module_script()
+		--------------------------------------------------------------------------------
+		-- TINY LUA COMPILER (TLC)
+		--------------------------------------------------------------------------------
+		-- URL:     https://github.com/bytexenon/tiny-lua-compiler
+		-- License: MIT (free to use and modify, attribution appreciated)
+		-- Version: 1.0.0
+		--------------------------------------------------------------------------------
+		-- DESCRIPTION:
+		--   A minimal, educational compiler for Lua 5.1, written in pure Lua 5.1.
+		--   It allows for dynamic compilation and execution of Lua code within a Lua
+		--   environment without the need to rely on the `load` or `loadstring` functions.
+		--   It features a high-performance lexer, complete parser, proper operator precedence,
+		--   lexical scoping, a bytecode generator, and a register-based virtual machine.
+		--
+		--   Pipeline Stages:
+		--     1. Tokenizer:        Source Text -> Token Stream
+		--     2. Parser:           Tokens      -> Abstract Syntax Tree (AST)
+		--     3. Code Generator:   AST         -> Function Prototype
+		--     4. Bytecode Emitter: Prototype   -> Binary Chunk (bytecode string)
+		--     5. Virtual Machine:  Prototype   -> Execution
+		--
+		-- USAGE:
+		--   local tlc = require("tlc")
+		--   tlc.run("print('Hello from TLC!')")
+		--
+		-- API SUMMARY:
+		--   High-Level
+		--     tlc.tokenize(code) ....................... Returns Token List
+		--     tlc.parse(code) .......................... Returns AST
+		--     tlc.compileToProto(code) ................. Returns Prototype
+		--     tlc.compile(code) ........................ Returns Bytecode String
+		--     tlc.run(code) ............................ Executes Code
+		--
+		--   Low-Level (Explicit Stages)
+		--     tlc.parseTokens(tokens) .................. Returns AST
+		--     tlc.generate(ast) ........................ Returns Prototype
+		--     tlc.emit(proto) .......................... Returns Bytecode String
+		--     tlc.execute(proto) ....................... Executes Prototype
+		--
+		--   Manual Pipeline (All Stages)
+		--     tlc.Tokenizer.new(code):tokenize()
+		--     tlc.Parser.new(tokens):parse()
+		--     tlc.CodeGenerator.new(ast):generate()
+		--     tlc.BytecodeEmitter.new(proto):emit()
+		--     tlc.VirtualMachine.new(proto):run()
+		--
+		-- NOTE:
+		--   * Internal component classes should be accessed via high-level API.
+		--   * TLC can run on all Lua versions (5.1 to 5.5), but bytecode generation
+		--     targets Lua 5.1 specifically.
+		--------------------------------------------------------------------------------
+		-- stylua: ignore start
+		
+		-- Converts a list into a Set (lookup table) for fast existence checking.
+		--
+		-- In Lua, iterating over a list to check for existence is slow. By converting
+		-- the list `{"a", "b"}` into `{a=true, b=true}`, we leverage Lua's internal
+		-- hash map architecture. This makes checking `if keywords[word]` faster than
+		-- iterating through the list each time.
+		local function createLookupTable(list)
+			local lookup = {}
+			for _, value in ipairs(list) do
+				lookup[value] = true
+			end
+			return lookup
+		end
+		
+		-- Constructs a Prefix Tree (Trie) for efficient operator matching.
+		--
+		-- This structure solves the "Longest Prefix Match" problem. When the tokenizer
+		-- encounters a character like `>`, it needs to decide if it's a standalone `>`,
+		-- or part of a longer operator like `>=`.
+		--
+		-- Instead of complex lookahead logic, we traverse this tree. If we can travel
+		-- deeper (e.g., from `.` to `.`), we continue. If we stop, we know we've
+		-- matched the longest valid operator.
+		local function makeTrie(ops)
+			local trie = {}
+			for _, op in ipairs(ops) do
+				local node = trie
+				for char in op:gmatch(".") do
+					node[char] = node[char] or {}
+					node = node[char]
+				end
+		
+				-- Mark this node as a valid ending point for an operator.
+				node.value = op
+			end
+			return trie
+		end
+		
+		-- Pre-computes character pattern matches into a lookup table.
+		--
+		-- Running `string.match(char, "%d")` on every character of the source code
+		-- is computationally expensive due to pattern matching overhead.
+		--
+		-- Since a byte can only have 256 possible values, we can pre-calculate
+		-- the result of the pattern match for every possible character (1-255)
+		-- This transforms a regex operation into a simple array lookup.
+		local function makePatternLookup(pattern)
+			local lookup = {}
+			for code = 1, 255 do
+				local char = string.char(code)
+				if char:match(pattern) then
+					lookup[char] = true
+				end
+			end
+			return lookup
+		end
+		
+		-- ============================================================================
+		--                                   (/^▽^)/
+		--                                 THE TOKENIZER!
+		-- ============================================================================
+		--
+		-- The First Stage of Compilation: Breaking Code Into Bite-Sized Pieces
+		--
+		-- What is Tokenization?
+		-- ---------------------
+		-- Think of the tokenizer (also called a lexical analyzer or scanner) as a
+		-- factory machine that scans raw text (your Lua source code) character by
+		-- character and outputs a stream of neatly labeled tokens - the fundamental
+		-- units of meaning in the language.
+		--
+		-- It's like splitting a sentence into individual words and punctuation marks,
+		-- but for programming languages.
+		--
+		-- Example:
+		--   Input:  "local x = 42 + y"
+		--   Output: [Keyword:local] [Identifier:x] [Equals] [Number:42]
+		--           [Operator:+] [Identifier:y]
+		--
+		-- Why Separate Tokenization from Parsing?
+		-- ----------------------------------------
+		-- You might wonder: why not parse the code directly character by character?
+		-- The answer is SEPARATION OF CONCERNS:
+		--
+		-- 1. TOKENIZER'S JOB: Recognize lexical patterns ("this looks like a number")
+		--     - Is "123" a valid number? Yes.
+		--     - Is "0xFF" a valid hex number? Yes.
+		--     - Is "while" a keyword or variable? Keyword.
+		--
+		-- 2. PARSER'S JOB: Recognize syntactic structure ("this looks like an if-statement")
+		--     - Does "if x then ... end" follow the grammar rules? Yes.
+		--     - What about "if x end"? No, missing "then".
+		--
+		-- By separating these concerns, each component becomes simpler and more
+		-- maintainable. The tokenizer doesn't need to know about if-statements,
+		-- and the parser doesn't need to know that "0xFF" is hexadecimal.
+		--
+		-- Performance Matters!
+		-- -------------------
+		-- Tokenization is the TIGHTEST LOOP in the entire compiler - it runs once
+		-- for every single character in your source code. For a 1000-line program,
+		-- that's 50,000+ character reads!
+		--
+		-- This is why TLC uses several performance tricks:
+		-- - Pre-computed pattern lookup tables (no regex in the hot path)
+		-- - Trie-based operator matching (O(k) where k = operator length)
+		-- - Strategic separation of "safe" vs "unsafe" punctuation, to minimize
+		--   expensive multi-character operator checks.
+		-- - string.find usage for bulk consumption of known patterns (faster than
+		--   manually scanning character-by-character in most cases).
+		
+		--* Tokenizer *--
+		
+		-- The main object responsible for scanning the source code string
+		-- and producing a list of tokens.
+		local Tokenizer = {}
+		Tokenizer.__index = Tokenizer
+		
+		Tokenizer.CONFIG = {
+			-- Single-character tokens.
+			--
+			-- It's the main lookup table for single-character tokens, it includes
+			-- tokens that are only safe to tokenize alone (e.g., not part of multi-char tokens).
+			-- The split between SAFE and UNSAFE punctuation allows for faster lookups, as we can
+			-- get more common tokens (like parentheses and commas) out of the way quickly, without
+			-- having to check for multi-character operators.
+			-- stylua: ignore
+			SAFE_PUNCTUATION = {
+				[":"] = "Colon",        [";"] = "Semicolon",
+				["("] = "LeftParen",    [")"] = "RightParen",
+				["{"] = "LeftBrace",    ["}"] = "RightBrace",
+				["]"] = "RightBracket", [","] = "Comma",
+		
+				-- Excluded:
+				-- ["["] = "LeftBracket" - Can start long strings
+				-- ["."] = "Dot"         - Can start ".." or "..."
+				-- ["="] = "Equals"      - Can start "=="
+			},
+		
+			-- Single-character tokens that can be part of multi-character tokens.
+			-- These require extra checks to see if they form longer operators, and
+			-- they must be checked after multi-character operators are attempted,
+			-- which are slow to check, so we separate them out for performance.
+			-- stylua: ignore
+			UNSAFE_PUNCTUATION = {
+				["["] = "LeftBracket",
+				["."] = "Dot",
+				["="] = "Equals"
+			},
+		
+			-- Operator Trie (Prefix Tree)
+			-- ============================
+			-- This solves the "Longest Prefix Match" problem for operators.
+			--
+			-- The Problem:
+			-- ------------
+			-- When the tokenizer sees a '<' character, it needs to decide:
+			--   - Is it the operator '<' (less than)?
+			--   - Or the start of '<=' (less than or equal)?
+			--
+			-- A naive approach would be:
+			--   if current == '<' and next == '=' then
+			--     return "<="
+			--   else
+			--     return "<"
+			--   end
+			--
+			-- But this becomes messy with many operators:
+			--   - '.' could be: '.', '..', or '...' (vararg)
+			--   - '=' could be: '=' or '=='
+			--   - '~' could be: '~' (error in Lua 5.1) or '~=' (not equal)
+			--
+			-- You'd need complex nested if-statements for each character.
+			--
+			-- The Solution: Trie (Prefix Tree)
+			-- ---------------------------------
+			-- A trie is a tree where each node represents a character.
+			-- Walking from root to leaf spells out a complete operator.
+			--
+			-- Visual representation of our operator trie:
+			--
+			--           [root]
+			--          /   |  \
+			--         <    =   .
+			--        /     |    \
+			--       =      =     .
+			--     (<=)    (==)  (..)
+			--
+			-- Algorithm (Longest Prefix Matching):
+			-- 1. Start at the root
+			-- 2. Look at current character, follow that edge if it exists
+			-- 3. If the current node is marked as valid operator, remember it
+			-- 4. Keep going as long as edges exist
+			-- 5. Return the longest valid operator found
+			--
+			-- stylua: ignore
+			OPERATOR_TRIE = makeTrie({
+				"^",  "*",  "/",  "%",  "+", "-", "<", ">", "#", -- Single-char
+				"<=", ">=", "==", "~=", ".."                     -- Multi-char
+			}),
+		
+			-- Escape Sequence Mapping.
+			-- Maps the character following a backslash '\' to its actual byte value.
+			-- e.g., 'n' -> '\n' (newline).
+			-- stylua: ignore
+			ESCAPES =  {
+				["a"]  = "\a", ["b"]  = "\b", ["f"]  = "\f",
+				["n"]  = "\n", ["r"]  = "\r", ["t"]  = "\t",
+				["v"]  = "\v", ["\\"] = "\\", ["\""] = "\"",
+				["\'"] = "\'"
+			},
+		
+			-- Reserved Keywords.
+			-- These words look like identifiers but have special grammatical meaning.
+			--
+			-- Strategy: "Lex as Identifier, Check if Keyword"
+			-- When the tokenizer reads a word like "while", it first consumes it as a
+			-- generic identifier. Then, it performs an O(1) check against this table.
+			-- If present, the token type is switched from "Identifier" to "Keyword".
+			-- stylua: ignore
+			KEYWORDS = createLookupTable({
+				"and",      "break", "do",    "else",
+				"elseif",   "end",   "false", "for",
+				"function", "if",    "in",    "local",
+				"nil",      "not",   "or",    "repeat",
+				"return",   "then",  "true",  "until",
+				"while"
+			})
+		}
+		
+		-- ============================================================================
+		--                  CHARACTER CLASSIFICATION OPTIMIZATION
+		-- ============================================================================
+		--
+		-- The Performance Problem
+		-- -----------------------
+		-- The Tokenizer is the slowest component of TLC, it runs a check for every character
+		-- in the source code. For a typical 1000-line program (~50KB), that's 50,000+ checks!
+		-- In order to keep the compiler fast, we need to optimize these character checks.
+		--
+		-- Naive approaches (what NOT to do):
+		--   function isDigit(char)
+		--     return string.match(char, "%d") ~= nil -- SLOW!
+		--   end
+		--
+		--   function isDigit(char)
+		--     return char == "0" or char == "1" or ... or char == "9" -- UGLY AND EVEN SLOWER!
+		--   end
+		--
+		-- These methods are slow because:
+		-- 1. `string.match` involves pattern matching overhead plus a function call,
+		--    those are slow when used for every character 50,000 times per file.
+		--
+		-- 2. Long chains of `or` comparisons are inefficient and hard to maintain,
+		--    performance tests show that it becomes more efficient to use a
+		--    lookup table if there are 3 or more comparisons.
+		--
+		-- The Solution: Pre-computed Lookup Tables
+		-- -----------------------------------------
+		-- Since a byte can only have 256 possible values (0-255), we can pre-calculate
+		-- the result of EVERY possible pattern match at initialization time.
+		--
+		-- Instead of calling `string.match(char, "%d")` 50,000 times, we:
+		-- 1. Calculate it 256 times at startup: makePatternLookup("%d")
+		-- 2. Store results in a table: DIGIT = {["0"]=true, ["1"]=true, ..., ["9"]=true}
+		-- 3. Use O(1) table lookup: if self.PATTERNS.DIGIT[char] then ...
+		--
+		-- stylua: ignore
+		Tokenizer.PATTERNS = {
+			SPACE            = makePatternLookup("%s"),   -- Whitespace (space, newline, etc.)
+			DIGIT            = makePatternLookup("%d"),   -- 0-9
+			IDENTIFIER_START = makePatternLookup("[%a_]") -- a-z, A-Z, underscore
+		}
+		
+		--// Tokenizer Constructor //--
+		function Tokenizer.new(code)
+			--// Type Checking //--
+			assert(
+				type(code) == "string",
+				"Tokenizer.new requires a string as input code. Got: " .. type(code)
+			)
+		
+			--// Instance Creation //--
+			-- Create the instance table and set its metatable to `Tokenizer`.
+			-- This grants the instance access to all methods defined in the Tokenizer
+			-- class (like `consume`, `getNextToken`, `tokenize`, etc.) via prototypal
+			-- inheritance, avoiding the need to copy methods for each instance.
+			return setmetatable({
+				code       = code,
+				curChar    = code:sub(1, 1),
+				curCharPos = 1,
+			}, Tokenizer)
+		end
+		
+		--// Character Navigation //--
+		
+		-- Looks ahead by 'n' characters in the character stream without advancing
+		-- the current position. Returns the character at the looked-ahead position,
+		-- or nil if trying to look past the end of the stream.
+		function Tokenizer:lookAhead(n)
+			local targetCharPos   = self.curCharPos + n
+			local lookedAheadChar = self.code:sub(targetCharPos, targetCharPos)
+			return lookedAheadChar
+		end
+		
+		-- Consumes (advances past) 'n' characters in the character stream.
+		function Tokenizer:consume(n)
+			-- Simple safety check: if we're trying to reach past the end of the stream,
+			-- we should throw an error. This prevents infinite loops in the tokenizer.
+			if self.curChar == "" then
+				error(
+					"Internal Tokenizer Error: Attempted to consume past end of stream. "
+						.. "Infinite loop detected?"
+				)
+			end
+		
+			local nextCharPos = self.curCharPos + n
+			local nextChar    = self.code:sub(nextCharPos, nextCharPos)
+		
+			-- Update the tokenizer's state.
+			self.curCharPos = nextCharPos
+			self.curChar    = nextChar
+		end
+		
+		function Tokenizer:setCurrentPosition(pos)
+			self.curCharPos = pos
+			self.curChar    = self.code:sub(pos, pos)
+		end
+		
+		--// Multi-Character Checkers //--
+		
+		-- Checks if the current character and the next character form the
+		-- prefix of a hexadecimal number (0x or 0X).
+		function Tokenizer:isHexadecimalNumberPrefix()
+			if self.curChar == "0" then
+				local nextChar = self:lookAhead(1)
+				return nextChar == "x" or nextChar == "X"
+			end
+		end
+		
+		--// Utils //--
+		
+		-- Calculates the "depth" of a long string or comment delimiter.
+		-- This counts how many '=' characters follow the initial '['.
+		-- For example:
+		--   [==[  -> depth of 2
+		--   [=[   -> depth of 1
+		--   [[    -> depth of 0
+		function Tokenizer:calculateDelimiterDepth()
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local startMatchPos, endMatchPos = string.find(self.code, "^=*", self.curCharPos)
+			if not startMatchPos then
+				return 0
+			end
+		
+			return endMatchPos - startMatchPos + 1
+		end
+		
+		--// Consumers //--
+		-- These functions are responsible for consuming a specific kind of token
+		-- from the character stream and returning its value. They handle the
+		-- internal structure of the token (like string contents or number format).
+		
+		-- Consumes whitespace characters (spaces, tabs, newlines) from the input stream.
+		-- Does not return the consumed whitespace, just advances the position.
+		function Tokenizer:consumeWhitespace()
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local _, endPos = string.find(self.code, "^%s*", self.curCharPos + 1)
+			endPos = endPos or #self.code
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			-- No return value; the function's effect is modifying the tokenizer's state.
+		end
+		
+		-- Consumes an identifier from the input stream.
+		-- An identifier starts with a letter or underscore, followed by letters,
+		-- digits, or underscores.
+		function Tokenizer:consumeIdentifier()
+			local startPos = self.curCharPos
+		
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local _, endPos = string.find(self.code, "^[%a%d_]*", startPos + 1)
+			endPos = endPos or #self.code
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			local identifier = self.code:sub(startPos, endPos)
+			return identifier
+		end
+		
+		-- Consumes a number literal from the input stream, returns
+		-- a string representation of the number. Must be validated
+		-- using tonumber() after consumption.
+		--
+		-- Handles all kinds of Lua number formats:
+		-- - Decimal integers (e.g., 42)
+		-- - Floating point numbers (e.g., 3.14, .5, 42.)
+		-- - Hexadecimal numbers (e.g., 0xFF, 0X1A3)
+		-- - Scientific notation (e.g., 1e10, 3.14E-2)
+		function Tokenizer:consumeNumber()
+			local startPos = self.curCharPos
+		
+			-- Hexadecimal number case.
+			-- 0[xX][0-9a-fA-F]+
+			if self:isHexadecimalNumberPrefix() then
+				local _, endPos = string.find(self.code, "^[%da-fA-F]+", self.curCharPos + 2)
+				if not endPos then
+					error(
+						string.format(
+							"malformed number near '%s'",
+							self.code:sub(startPos, self.curCharPos - 1)
+						)
+					)
+				end
+		
+				-- Update the state.
+				self:setCurrentPosition(endPos + 1)
+		
+				local numberString = self.code:sub(startPos, self.curCharPos - 1)
+				return numberString
+			end
+		
+			-- Consume the integer part.
+			-- The first character is guaranteed to be a digit here,
+			-- as we checked this before calling `consumeNumber`.
+			local _, endPos = string.find(self.code, "^[0-9]*", startPos)
+			endPos = endPos or #self.code
+		
+			-- Floating point number case.
+			-- \.[0-9]*
+			local nextChar = self.code:sub(endPos + 1, endPos + 1)
+			if nextChar == "." then
+				_, endPos = string.find(self.code, "^[0-9]*", endPos + 2)
+				endPos = endPos or #self.code
+			end
+		
+			-- Exponential (scientific) notation case.
+			-- [eE][+-]?[0-9]+
+			nextChar = self.code:sub(endPos + 1, endPos + 1)
+			if nextChar == "e" or nextChar == "E" then
+				_, endPos = string.find(self.code, "^[+-]?[0-9]+", endPos + 2)
+		
+				if not endPos then
+					error(
+						string.format(
+							"malformed number near '%s'",
+							self.code:sub(startPos, self.curCharPos - 1)
+						)
+					)
+				end
+			end
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			local numberString = self.code:sub(startPos, self.curCharPos - 1)
+			return numberString
+		end
+		
+		-- Consumes a numeric escape sequence (\ddd) from a string literal.
+		-- Validates that the number is within the byte range (0-255).
+		function Tokenizer:consumeNumericEscapeSequence()
+			-- [0-9]{1,3}
+			local pattern = "^[0-9][0-9]?[0-9]?" -- The last two digits are optional.
+			local startPos, endPos = string.find(self.code, pattern, self.curCharPos)
+			local numberString = self.code:sub(startPos, endPos)
+			local number = tonumber(numberString)
+			if number > 255 then
+				error("escape sequence too large near '\\" .. numberString .. "'")
+			end
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			return string.char(number)
+		end
+		
+		-- Consumes an escape sequence in a string literal (e.g., \n, \t, \123).
+		-- Returns the actual character value represented by the escape sequence.
+		function Tokenizer:consumeEscapeSequence()
+			self:consume(1) -- Consume the "\" character.
+			local curChar = self.curChar
+		
+			-- Is it a standard escape sequence? (e.g. \n, \t, etc.)
+			local convertedChar = self.CONFIG.ESCAPES[curChar]
+			if convertedChar then
+				self:consume(1) -- Consume the escape character.
+				return convertedChar
+		
+				-- Is it a numeric escape sequence? (e.g. \65, \123, etc.)
+			elseif self.PATTERNS.DIGIT[curChar] then
+				return self:consumeNumericEscapeSequence()
+			end
+		
+			error("invalid escape sequence near '\\" .. curChar .. "'")
+		end
+		
+		-- Consumes a single or double-quoted string literal from the input stream.
+		-- Handles escape sequences within the string.
+		function Tokenizer:consumeSimpleString()
+			local quoteChar = self.curChar
+			local newString = {}
+			self:consume(1) -- Consume the quote.
+		
+			-- Consume until the closing quote is found.
+			while self.curChar ~= quoteChar do
+				-- Is it an escape sequence?
+				if self.curChar == "\\" then
+					local consumedEscape = self:consumeEscapeSequence()
+					table.insert(newString, consumedEscape)
+		
+					-- Is it the end of the input?
+				elseif self.curChar == "" then
+					error("Unclosed string")
+		
+					-- Regular character.
+				else
+					table.insert(newString, self.curChar)
+					self:consume(1) -- Consume the character.
+				end
+			end
+			self:consume(1) -- Consume the closing quote.
+		
+			return table.concat(newString)
+		end
+		
+		-- Consumes a long string literal using [[...]] or [=[...]=] syntax.
+		-- Automatically skips a leading newline if present (Lua 5.1 behavior).
+		function Tokenizer:consumeLongString()
+			self:consume(1) -- Consume the first '['.
+			local depth = self:calculateDelimiterDepth()
+			self:consume(depth) -- Consume the '=' characters.
+		
+			if self.curChar ~= "[" then
+				error("Invalid long string delimiter")
+			end
+		
+			self:consume(1) -- Consume the second '['.
+		
+			-- Long string starts with a newline?
+			if self.curChar == "\n" then
+				-- If the first character inside the long string is a newline,
+				-- we skip it entirely. This is an edge case in the official lexer source.
+				--
+				-- ```c
+				-- static void read_long_string (LexState *ls, SemInfo *seminfo, int sep) {
+				--   ...
+				--   if (currIsNewline(ls))  /* string starts with a newline? */
+				--     inclinenumber(ls);  /* skip it */
+				--   ...
+				-- ```
+				-- Source: https://www.lua.org/source/5.1/llex.c.html#read_long_string
+		
+				-- Skip it.
+				self:consume(1)
+			end
+		
+			local stringStartPos = self.curCharPos
+		
+			-- Consume the closing delimiter using Lua pattern matching.
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local closingDelimiter = "%]" .. string.rep("=", depth) .. "%]"
+			local startPos, endPos = string.find(self.code, closingDelimiter, self.curCharPos)
+			if not endPos then
+				error("Unclosed long string")
+			end
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			local stringValue = self.code:sub(stringStartPos, startPos - 1)
+			return stringValue
+		end
+		
+		-- Consumes an operator token from the input stream.
+		-- Uses the operator trie for longest prefix matching.
+		function Tokenizer:consumeOperator()
+			local node = self.CONFIG.OPERATOR_TRIE
+			local operator
+		
+			-- Walk the trie character by character.
+			local startPos   = self.curCharPos
+			local newCharPos = startPos
+			while true do
+				-- Optimization: Use `sub` instead of `lookAhead` to
+				-- avoid extra function call overhead in this tight loop.
+				local character = string.sub(self.code, newCharPos, newCharPos)
+				node = node[character]
+		
+				-- If the path doesn't exist in the trie,
+				-- it means that we've gone as far as we can.
+				if not node then break end
+		
+				-- If this node represents a valid operator, remember it.
+				-- We keep going to see if there's a longer match (greedy matching).
+				operator   = node.value
+				newCharPos = newCharPos + 1
+			end
+		
+			-- If no valid operator was found on the path, it's not an operator.
+			if not operator then return end
+		
+			-- Skip over the operator characters.
+			self:consume(newCharPos - startPos)
+		
+			return operator
+		end
+		
+		-- Consumes a single-line comment (-- ...) until the end of the line.
+		-- Does not return the consumed comment, just advances the position.
+		function Tokenizer:consumeShortComment()
+			-- Consume until the end of the line.
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local _, endPos = string.find(self.code, "[^\n]*", self.curCharPos)
+			endPos = endPos or #self.code
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			-- No return value; the function's effect is modifying the tokenizer's state.
+		end
+		
+		-- Consumes a multi-line comment using --[[...]] or --[=[...]=] syntax.
+		-- Falls back to short comment if delimiter pattern doesn't match.
+		-- Does not return the consumed comment, just advances the position.
+		function Tokenizer:consumeLongComment()
+			self:consume(1) -- Consume the first '['.
+		
+			-- Calculate the delimiter depth.
+			local depth = self:calculateDelimiterDepth()
+			self:consume(depth) -- Consume the '=' characters.
+		
+			-- Is it not a full delimiter?
+			if self.curChar ~= "[" then
+				-- Treat it as a short comment instead.
+				return self:consumeShortComment()
+			end
+		
+			self:consume(1) -- Consume the second '['.
+		
+			-- Consume the closing delimiter using Lua pattern matching.
+			-- (We're putting the modulo signs around the `]` to escape it in the pattern).
+			--
+			-- NOTE: In this case, using `string.find` is faster than
+			-- manually scanning character by character.
+			local closingDelimiter = "%]" .. string.rep("=", depth) .. "%]"
+			local _, endPos = string.find(self.code, closingDelimiter, self.curCharPos)
+			if not endPos then
+				error("Unclosed long comment")
+			end
+		
+			-- Update the state.
+			self:setCurrentPosition(endPos + 1)
+		
+			-- No return value; the function's effect is modifying the tokenizer's state.
+		end
+		
+		-- Consumes a comment, dispatching between short (--) and long (--[[...]]) comments.
+		-- Does not return the consumed comment, just advances the position.
+		function Tokenizer:consumeComment()
+			self:consume(2) -- Consume the "--".
+			if self.curChar == "[" then
+				return self:consumeLongComment()
+			end
+			return self:consumeShortComment()
+		end
+		
+		--// Token Consumer Handler //--
+		
+		-- Consumes and returns tokenKind, tokenValue, tokenRaw for the next
+		-- token in the stream. If it returns a nil "tokenKind", it means that
+		-- no token was produced (e.g., whitespace or comment), so the caller should
+		-- call this method again to get the next token.
+		-- "tokenValue" and "tokenRaw" may also be nil for tokens that don't have
+		-- associated values (e.g., punctuation).
+		--
+		-- NOTE: For optimization, the checks in this function are ordered
+		-- by expected frequency of occurrence in typical Lua source.
+		function Tokenizer:getNextToken()
+			local curChar = self.curChar
+		
+			-- Skip whitespace.
+			if self.PATTERNS.SPACE[curChar] then
+				self:consumeWhitespace()
+				curChar = self.curChar
+		
+				-- In some cases, whitespace may be the last thing in the stream,
+				-- to not cause an error down the line, we must check if we've reached
+				-- the end of the input after consuming whitespace.
+				if curChar == "" then
+					return nil -- No token produced.
+				end
+			end
+		
+			-- Is it an identifier (variable name, function name, keyword, etc.)?
+			if self.PATTERNS.IDENTIFIER_START[curChar] then
+				-- Consume the sequence of valid identifier characters.
+				local identifier = self:consumeIdentifier()
+		
+				-- Is it a keyword? (E.g., "while", "local", "function", etc.)
+				if self.CONFIG.KEYWORDS[identifier] then
+					return "Keyword", identifier
+				end
+		
+				return "Identifier", identifier
+			end
+		
+			-- Processes "safe" punctuation first (single-character tokens that
+			-- cannot be part of multi-character tokens).
+			local safeTokenKind = self.CONFIG.SAFE_PUNCTUATION[curChar]
+			if safeTokenKind then
+				self:consume(1) -- Consume the character.
+				return safeTokenKind, nil
+		
+				-- Handle short string literals (quoted strings).
+			elseif curChar == '"' or curChar == "'" then
+				local stringLiteral = self:consumeSimpleString()
+				return "String", stringLiteral
+		
+				-- Handle numeric literals (decimal, hex, scientific, float).
+			elseif self.PATTERNS.DIGIT[curChar] then
+				local numberString = self:consumeNumber()
+				local numberValue = tonumber(numberString)
+		
+				-- Validate the number conversion.
+				-- If this check ever gets triggered, it indicates that there's
+				-- a bug in the `consumeNumber` implementation, please report it.
+				if not numberValue then
+					error(
+						string.format(
+							"malformed number near '%s'",
+							numberString
+						)
+					)
+				end
+		
+				return "Number", numberValue, numberString
+		
+				-- Is it a comment?
+			elseif curChar == "-" and self:lookAhead(1) == "-" then
+				self:consumeComment()
+				return nil -- No token produced.
+		
+				-- Handle numbers starting with a decimal point and vararg ("...").
+			elseif curChar == "." then
+				local nextChar = self:lookAhead(1)
+		
+				-- Is it a number starting with a decimal point? (e.g., .5, .123)
+				-- NOTE: We repeat the logic here for performance.
+				if self.PATTERNS.DIGIT[nextChar] then
+					local numberString = self:consumeNumber()
+					local numberValue = tonumber(numberString)
+		
+					-- Validate the number conversion.
+					-- If this check ever gets triggered, it indicates that there's
+					-- a bug in the `consumeNumber` implementation, please report it.
+					if not numberValue then
+						error(
+							string.format(
+								"malformed number near '%s'",
+								numberString
+							)
+						)
+					end
+		
+					return "Number", numberValue, numberString
+		
+					-- Is it a vararg ("...")?
+				elseif nextChar == "." and self:lookAhead(2) == "." then
+					self:consume(3) -- Consume the "...".
+					return "Vararg", nil
+				end
+		
+				-- Handle long string literals (with [[...]] or [=[...]=], etc.).
+			elseif curChar == "[" then
+				local nextChar = self:lookAhead(1)
+		
+				-- Is it really a long string?
+				if nextChar == "[" or nextChar == "=" then
+					local stringLiteral = self:consumeLongString()
+					return "String", stringLiteral
+				end
+		
+			end
+		
+			-- Attempt to consume a symbolic operator using the trie.
+			-- This handles operators like "+", "==", "<=", "..", etc.
+			local operator = self:consumeOperator()
+			if operator then
+				-- If an operator was matched and consumed, return it as a token.
+				return "Operator", operator
+			end
+		
+			-- Handle "unsafe" punctuation (single-character tokens that
+			-- could be part of multi-character tokens).
+			local unsafeTokenKind = self.CONFIG.UNSAFE_PUNCTUATION[curChar]
+			if unsafeTokenKind then
+				self:consume(1) -- Consume the character.
+				return unsafeTokenKind, nil
+			end
+		
+			-- If we reach this point, it means the current character doesn't match
+			-- any known token kind. This is an error condition, as the character
+			-- is not valid in the Lua language syntax.
+			error(
+				string.format(
+					"Unexpected character '%s' at position %d",
+					tostring(curChar),
+					self.curCharPos
+				)
+			)
+		end
+		
+		--// Tokenizer Main Method //--
+		-- The public method to perform the entire tokenization process
+		-- on the input code string provided during initialization.
+		-- Returns a list (Lua table with integer keys) of all identified tokens,
+		-- excluding whitespace and comments.
+		function Tokenizer:tokenize()
+			local tokens = {}
+			local tokenIndex = 1
+		
+			-- Loop through the character stream as long as there are characters left.
+			while self.curChar ~= "" do
+				-- Get the next token (or nil if whitespace/comment was skipped).
+				local tokenKind, tokenValue, tokenRaw = self:getNextToken()
+		
+				-- If `getNextToken` returned a valid token (not nil)...
+				if tokenKind then
+					-- Add the token to our list of results.
+					--
+					-- Note: We don't use table.insert here as this is a very performance-critical
+					-- section of the code. Using a simple index is faster for sequential inserts.
+					tokens[tokenIndex] = {
+						kind  = tokenKind,
+						value = tokenValue,
+						raw   = tokenRaw
+					}
+					tokenIndex = tokenIndex + 1
+				end
+			end
+		
+			-- Append an EOF sentinel so the parser can assume a final token and skip
+			-- nil checks when checking token kinds.
+			table.insert(tokens, {
+				kind  = "EOF",
+				value = nil,
+				raw   = nil
+			})
+		
+			-- Return the list of collected tokens.
+			return tokens
+		end
+		
+		--[[
+		    ============================================================================
+		                            (ﾉ◕ヮ◕)ﾉ*:･ﾟ THE PARSER!
+		    ============================================================================
+		
+		    The Second Stage of Compilation: Building the Structure
+		
+		    While the Tokenizer sees a flat list of words ("if", "x", "then"), the
+		    Parser sees the structure and hierarchy of the code. It organizes tokens
+		    into an Abstract Syntax Tree (AST).
+		
+		    Strategy: Recursive Descent
+		    ---------------------------
+		    This parser uses a "Recursive Descent" strategy. This means we have a
+		    separate Lua function for every grammar rule (e.g., `parseIfStatement`,
+		    `parseWhileStatement`). These functions call each other recursively to
+		    match the structure of the code. It is the most intuitive way to write a
+		    parser by hand.
+		--]]
+		
+		--* Parser *--
+		-- The main object responsible for consuming tokens and building the AST.
+		local Parser = {}
+		Parser.__index = Parser -- Set up for method calls via `.`.
+		
+		Parser.CONFIG = {
+		  --[[
+		    Operator Precedence & Associativity Table
+		    -----------------------------------------
+		    This table drives the "Precedence Climbing" algorithm used in `parseBinaryExpression`.
+		    It answers two questions:
+		    1. Binding Power: In `1 + 2 * 3`, why is `*` evaluated before `+`?
+		    2. Associativity: In `a ^ b ^ c`, do we calculate `(a^b)^c` or `a^(b^c)`?
+		
+		    Format: { left_binding_power, right_binding_power }
+		
+		    How it works:
+		    - Higher numbers mean tighter binding (evaluated sooner).
+		    - Left-Associative (e.g., `+`, `-`, `*`):
+		        Left power >= Right power.
+		        This makes `1 - 2 - 3` parse as `(1 - 2) - 3`.
+		    - Right-Associative (e.g., `^`, `..`):
+		        Right power > Left power.
+		        This makes `a ^ b ^ c` parse as `a ^ (b ^ c)`.
+		  --]]
+			-- stylua: ignore
+			PRECEDENCE = {
+				["+"]   = {6, 6},  ["-"]   = {6, 6}, -- Addition/Subtraction
+				["*"]   = {7, 7},  ["/"]   = {7, 7}, -- Multiplication/Division
+				["%"]   = {7, 7},                    -- Modulo
+				["^"]   = {10, 9},                   -- Exponentiation (Right-associative!)
+				[".."]  = {5, 4},                    -- String Concatenation (Right-associative!)
+				["=="]  = {3, 3},  ["~="]  = {3, 3}, -- Equality / Inequality
+				["<"]   = {3, 3},  [">"]   = {3, 3}, -- Less Than / Greater Than
+				["<="]  = {3, 3},  [">="]  = {3, 3}, -- Less Than or Equal / Greater Than or Equal
+				["and"] = {2, 2},                    -- Logical AND (Short-circuiting)
+				["or"]  = {1, 1}                     -- Logical OR (Short-circuiting)
+			},
+		
+			-- Precedence for all unary operators (like `-x` or `not x`).
+			-- They bind tighter than most binary operators but looser than exponentiation.
+			-- (e.g., `-2^3` parses as `-(2^3)`, not `(-2)^3`).
+			UNARY_PRECEDENCE = 8,
+		
+			-- L-Values (Locator Values).
+			-- These are the specific node types that are allowed to appear on the
+			-- LEFT side of an assignment (e.g., `x = 1` or `t.k = 1`).
+			-- You can't assign to a number (`5 = 1` is invalid), so "NumericLiteral" isn't here.
+			LVALUE_NODES = createLookupTable({ "Variable", "IndexExpression" }),
+		
+			-- Keywords that explicitly terminate a code block.
+			-- When the parser sees one of these, it knows the current list of statements is done.
+			TERMINATION_KEYWORDS = createLookupTable({ "end", "else", "elseif", "until" }),
+		
+			-- Statement Dispatcher.
+			-- Maps a keyword to the specific function responsible for parsing that statement.
+			-- stylua: ignore
+			KEYWORD_HANDLERS = {
+				["do"]       = "parseDoStatement",
+				["break"]    = "parseBreakStatement",
+				["for"]      = "parseForStatement",
+				["function"] = "parseFunctionDeclaration",
+				["if"]       = "parseIfStatement",
+				["local"]    = "parseLocalStatement",
+				["repeat"]   = "parseRepeatStatement",
+				["return"]   = "parseReturnStatement",
+				["while"]    = "parseWhileStatement"
+			},
+		
+			-- Lookups for quick operator classification.
+			UNARY_OPERATORS  = createLookupTable({ "-", "#", "not" }),
+		
+			-- stylua: ignore
+			BINARY_OPERATORS = createLookupTable({
+				"+",  "-",   "*",  "/",
+				"%",  "^",   "..", "==",
+				"~=", "<",   ">",  "<=",
+				">=", "and", "or"
+			})
+		}
+		
+		--// Parser Constructor //--
+		
+		-- Creates a new Parser instance given a list of tokens from the Tokenizer.
+		function Parser.new(tokens)
+			--// Type Checking //--
+			assert(
+				type(tokens) == "table",
+				"Parser.new requires a table of tokens. Got: " .. type(tokens)
+			)
+		
+			--// Instance Creation //--
+			return setmetatable({
+				tokens            = tokens,
+				currentTokenIndex = 1,
+				currentToken      = tokens[1],
+				currentScope      = nil
+			}, Parser)
+		end
+		
+		--// Token Navigation //--
+		
+		-- Looks ahead to the next token without consuming it.
+		--
+		-- NOTE: This function is used only in one place in the parser (`:consumeTable`),
+		-- as it is the only situation where we need to peek more than one token ahead.
+		function Parser:lookAhead()
+			return self.tokens[self.currentTokenIndex + 1]
+		end
+		
+		-- Consumes (advances past) 'n' tokens in the token stream.
+		function Parser:consume(n)
+			local newTokenIndex = self.currentTokenIndex + n
+			local newToken      = self.tokens[newTokenIndex]
+			self.currentTokenIndex = newTokenIndex
+			self.currentToken      = newToken
+		end
+		
+		-- Helper to get a human-readable description of a token for error messages.
+		-- Returns a string describing the token kind and value (if any).
+		function Parser:getTokenDescription(token)
+			if not token.value then return tostring(token.kind) end
+			return string.format("%s [%s]", tostring(token.kind), tostring(token.value))
+		end
+		
+		-- Helper to report parsing errors.
+		-- All error calls should ideally go through this for consistent reporting.
+		function Parser:error(message)
+			-- Homework idea: Add location information to the error message
+			-- (e.g., line number, column number, etc.) for better debugging.
+		
+			error(
+				string.format(
+					"Parser Error: %s",
+					message
+				)
+			)
+		end
+		
+		-- Consumes the current token if it matches the expected `tokenKind` and `tokenValue`.
+		-- If it doesn't match, throws a syntax error.
+		function Parser:consumeToken(tokenKind, tokenValue)
+			local token = self.currentToken
+		
+			-- Check if the current token exists and matches the expected kind and value.
+			if token.kind == tokenKind and token.value == tokenValue then
+				-- Match! Consume this token and exit the function.
+				self:consume(1)
+				return
+			end
+		
+			-- If we didn't match, throw a syntax error.
+			self:error(
+				string.format(
+					"Expected %s [%s] token, got: %s",
+					tostring(tokenKind),
+					tostring(tokenValue),
+					self:getTokenDescription(token)
+				)
+			)
+		end
+		
+		--// Scope Management //--
+		-- These functions manage the parser's understanding of variable scopes
+		-- (blocks, functions) as it traverses the AST structure implicitly during parsing.
+		
+		-- Creates a new scope objects and links it to the current scope.
+		-- `isFunctionScope` is a crucial flag: only function scopes create a boundary
+		-- that causes variables from enclosing scopes to become 'upvalues' if accessed.
+		-- `isLoopScope` is used to validate `break` statement correctness.
+		function Parser:enterScope(isFunctionScope, isLoopScope)
+			local newScope = {
+				localVariables  = {},
+				isFunctionScope = isFunctionScope or false,
+				isLoopScope     = isLoopScope or false,
+				parentScope     = self.currentScope
+			}
+			self.currentScope = newScope
+			return newScope
+		end
+		
+		-- Exits the current scope, returning to the parent scope.
+		-- Should be called when leaving a block or function.
+		function Parser:exitScope()
+			self.currentScope = self.currentScope.parentScope
+		end
+		
+		--// In-Scope Variable Management //--
+		-- These functions help track local variable declarations within the current scope.
+		
+		function Parser:declareLocalVariable(variable)
+			self.currentScope.localVariables[variable] = true
+		end
+		
+		function Parser:declareLocalVariables(variables)
+			local currentLocalVariables = self.currentScope.localVariables
+			for _, variable in ipairs(variables) do
+				currentLocalVariables[variable] = true
+			end
+		end
+		
+		-- Resolves a variable name to its scope type: Local, Upvalue, or Global.
+		-- This implements Lua's lexical scoping rules by walking up the scope chain.
+		--
+		-- Local: Found in the current function's scope or its blocks.
+		-- Upvalue: Found in an enclosing function's scope (closure capture).
+		-- Global: Not found in any open scope, assumed to be in _G.
+		function Parser:getVariableType(variableName)
+			local currentScope = self.currentScope
+			local isUpvalue    = false
+		
+			while currentScope do
+				-- If found, determine if it's a local or an upvalue based on whether
+				-- we have crossed a function boundary during the search.
+				if currentScope.localVariables[variableName] then
+					local variableType = (isUpvalue and "Upvalue") or "Local"
+					return variableType
+		
+					-- A function scope acts as a closure boundary. Any variable found
+					-- in a scope above this one must be captured as an upvalue.
+				elseif currentScope.isFunctionScope then
+					isUpvalue = true
+				end
+		
+				currentScope = currentScope.parentScope
+			end
+		
+			-- If the variable isn't declare in any enclosing scope,
+			-- Lua assumes it refers to a global variable.
+			return "Global"
+		end
+		
+		-- Used to determine if a `break` statement is valid in the current context.
+		function Parser:canBreak()
+			local currentScope = self.currentScope
+			while currentScope do
+				if currentScope.isLoopScope then
+					return true
+				elseif currentScope.isFunctionScope then
+					-- Can't break out of a function.
+					break
+				end
+				currentScope = currentScope.parentScope
+			end
+		
+			return false
+		end
+		
+		--// Token Checkers //--
+		-- Lightweight checks to see if a token matches a specific kind and/or value
+		-- without throwing an error if it doesn't match.
+		
+		function Parser:checkCurTokenKind(kind)
+			return self.currentToken.kind == kind
+		end
+		
+		function Parser:isComma()
+			return self.currentToken.kind == "Comma"
+		end
+		
+		function Parser:checkKeyword(keyword)
+			local token = self.currentToken
+			return token.kind == "Keyword" and token.value == keyword
+		end
+		
+		function Parser:isUnaryOperator()
+			local token = self.currentToken
+			return (token.kind == "Operator" or token.kind == "Keyword")
+				and self.CONFIG.UNARY_OPERATORS[token.value]
+		end
+		
+		function Parser:isBinaryOperator()
+			local token = self.currentToken
+			return (token.kind == "Operator" or token.kind == "Keyword")
+				and self.CONFIG.BINARY_OPERATORS[token.value]
+		end
+		
+		--// Token Expectation //--
+		-- These functions check the current token's kind or value without consuming it.
+		-- Useful for making parsing decisions ("Is the next thing an identifier?").
+		
+		function Parser:expectTokenKind(expectedKind)
+			if not self:checkCurTokenKind(expectedKind) then
+				-- No match? Syntax error.
+				self:error(
+					string.format(
+						"Expected a %s, but found %s",
+						tostring(expectedKind),
+						tostring(self.currentToken.kind)
+					)
+				)
+			end
+		
+			-- Advance to the next token.
+			self:consume(1)
+		end
+		
+		function Parser:expectKeyword(keyword)
+			-- Check if the current token is a keyword and matches the value.
+			if not self:checkKeyword(keyword) then
+				-- No match? Syntax error.
+				self:error(
+					string.format(
+						"Expected keyword '%s', but found %s",
+						keyword,
+						self:getTokenDescription(self.currentToken)
+					)
+				)
+			end
+		
+			-- Match! Consume the keyword token.
+			self:consume(1) -- Advance to the next token.
+		end
+		
+		--// AST Node Checkers //--
+		-- Functions to check properties of already-parsed AST nodes.
+		
+		-- Checks if a given AST `node` is a valid target for the left-hand side of an assignment.
+		-- Valid LValues are single variables or table access expressions.
+		-- Uses the `self.CONFIG.LVALUE_NODES` lookup table.
+		function Parser:isValidAssignmentLvalue(node)
+			return node and self.CONFIG.LVALUE_NODES[node.kind]
+		end
+		
+		--// Parsers //--
+		-- These functions are responsible for parsing specific syntactic constructs
+		-- in the token stream and building the corresponding AST nodes.
+		
+		-- Consumes an identifier token and returns its value.
+		function Parser:consumeIdentifier()
+			local currentToken = self.currentToken
+			self:expectTokenKind("Identifier")
+			return currentToken.value
+		end
+		
+		-- Consumes a variable reference and resolves its type (Local, Upvalue, or Global).
+		function Parser:consumeVariable()
+			local variableName = self.currentToken.value
+			self:expectTokenKind("Identifier")
+			local variableType = self:getVariableType(variableName)
+		
+			return { kind = "Variable",
+				name         = variableName,
+				variableType = variableType
+			}
+		end
+		
+		-- Parses a comma-separated list of identifiers.
+		-- Consumes the identifier tokens and commas.
+		-- Example: `a, b, c` -> returns `{"a", "b", "c"}`
+		function Parser:consumeIdentifierList()
+			-- The first token must be an identifier, consume it.
+			local identifiers = { self:consumeIdentifier() }
+			if not self:isComma() then
+				-- It's a single identifier, return immediately.c
+				return identifiers
+			end
+			self:consume(1) -- Consume the comma.
+		
+			-- Loop to consume additional identifiers separated by commas.
+			while true do
+				local identifier = self:consumeIdentifier()
+				table.insert(identifiers, identifier)
+				if not self:isComma() then
+					break
+				end
+		
+				self:consume(1) -- Consume the comma.
+			end
+		
+			return identifiers
+		end
+		
+		-- Parses a parameter list within a function definition.
+		-- Handles regular named parameters and the optional vararg token `...`.
+		-- Consumes the entire parameter list syntax, including parentheses and commas.
+		-- Returns a list of parameter names and a boolean if vararg is present.
+		-- Example: `(a, b, c, ...)` -> returns `{"a", "b", "c"}, true`
+		function Parser:consumeParameters()
+			self:consumeToken("LeftParen") -- Expect and consume the opening parenthesis.
+		
+			local parameters = {}
+			local isVararg   = false
+		
+			-- Fast path: Check for immediate closing parenthesis.
+			if self:checkCurTokenKind("RightParen") then
+				self:consume(1) -- Consume the closing parenthesis.
+				return parameters, isVararg
+			end
+		
+			-- Okay, there's at least one parameter, start the loop.
+			while true do
+				-- Is it a named parameter?
+				if self:checkCurTokenKind("Identifier") then
+					-- Add the parameter name to the list.
+					table.insert(parameters, self.currentToken.value)
+					self:consume(1) -- Consume the identifier token.
+		
+					-- Is it a vararg parameter?
+				elseif self:checkCurTokenKind("Vararg") then
+					isVararg = true -- Set the vararg flag.
+					self:consume(1) -- Consume the "..." token.
+					-- According to Lua grammar, "..." must be the last parameter.
+					break
+		
+				else
+					self:error(
+						string.format(
+							"Expected parameter name or '...', but got: %s",
+							self:getTokenDescription(self.currentToken)
+						)
+					)
+				end
+		
+				if self.currentToken.kind == "RightParen" then
+					break -- End of parameter list.
+				elseif self:isComma() then
+					self:consume(1) -- Consume the comma and continue.
+				end
+			end
+			self:consumeToken("RightParen")
+		
+			return parameters, isVararg
+		end
+		
+		-- Parses a table index expression, e.g., `table.key` or `table["key"]`.
+		-- `currentExpression` is the AST node representing the table being accessed.
+		-- Returns an AST node representing the index access.
+		function Parser:consumeIndexExpression(currentExpression)
+			local isPrecomputed = true
+			local indexExpression
+		
+			-- table.key syntax.
+			if self:checkCurTokenKind("Dot") then
+				self:consume(1) -- Consume the '.' character.
+				local identifier = self:consumeIdentifier()
+				indexExpression = { kind = "StringLiteral",
+					value = identifier
+				}
+		
+				-- table["key"] syntax.
+			else
+				self:expectTokenKind("LeftBracket") -- Expect and consume the '[' character.
+				indexExpression = self:expectExpression()
+				isPrecomputed   = false
+				self:expectTokenKind("RightBracket")
+			end
+		
+			-- Create the AST node for the table index access.
+			return { kind = "IndexExpression",
+				base          = currentExpression,
+				index         = indexExpression,
+				isPrecomputed = isPrecomputed
+				-- NOTE: `IsPrecomputed` is not used in the compiler, it's present to make
+				-- third-party tools easier to build (e.g., linters, formatters).
+			}
+		end
+		
+		-- Parses a table constructor expression (e.g., {1, 2, key = value}).
+		-- Handles explicit keys, identifier keys, and implicit numeric keys.
+		function Parser:consumeTable()
+			self:consumeToken("LeftBrace")
+		
+			local implicitKeyCounter = 1
+			local tableElements      = {}
+		
+			-- Loop through tokens until we find the closing "}".
+			while not self:checkCurTokenKind("RightBrace") do
+				local key, value
+				local isImplicitKey = false
+		
+				-- Determine which kind of table field we are parsing.
+		
+				-- Explicit key in brackets, e.g., `[1+2] = "value"`.
+				-- [<expression>] = <expression>
+				if self:checkCurTokenKind("LeftBracket") then
+					self:consume(1) -- Consume "["
+					key = self:expectExpression()
+					self:expectTokenKind("RightBracket")
+					self:expectTokenKind("Equals")
+					value = self:expectExpression()
+		
+					-- Identifier key, e.g., `name = "value"`.
+					-- This is syntactic sugar for `["name"] = "value"`.
+					-- <identifier> = <expression>
+					--
+					-- This is the only part of the parser that requires lookahead.
+					-- We could potentially use left factoring to avoid it, but it would
+					-- complicate the parser for little gain.
+				elseif self:checkCurTokenKind("Identifier") and
+					self:lookAhead().kind == "Equals" then
+					key = { kind = "StringLiteral",
+						value = self.currentToken.value
+					}
+					self:consume(1) -- Consume the identifier.
+					self:consume(1) -- Consume the "=".
+					value = self:expectExpression()
+		
+					-- Implicit numeric key, e.g. `"value1", MY_VAR, 42`
+					-- This is syntactic sugar for `[1] = "value1", [2] = MY_VAR, [3] = 42`.
+					-- <expression>
+				else
+					isImplicitKey = true
+					key = { kind = "NumericLiteral",
+						value = implicitKeyCounter
+					}
+					implicitKeyCounter = implicitKeyCounter + 1
+					value = self:expectExpression()
+				end
+		
+				local element = { kind = "TableElement",
+					key           = key,
+					value         = value,
+					isImplicitKey = isImplicitKey
+				}
+		
+				table.insert(tableElements, element)
+		
+				-- Table elements can be separated by "," or ";". If we see one, consume it
+				-- and continue parsing more elements. Otherwise, we're done.
+				if self:checkCurTokenKind("Comma") or self:checkCurTokenKind("Semicolon") then
+					self:consume(1) -- Consume the separator.
+				else
+					break
+				end
+			end
+		
+			self:consumeToken("RightBrace")
+		
+			return { kind = "TableConstructor",
+				elements = tableElements
+			}
+		end
+		
+		-- Parses a function call expression (e.g., f(x, y), f"hello", f{1,2}), and
+		-- returns an AST node.
+		--
+		-- `currentExpression` is the AST node representing the function being called.
+		-- `isMethodCall` indicates if the node should be marked as a method call.
+		--
+		-- It parses the following forms:
+		--   f(a, b)      -- Explicit call with parentheses
+		--   f "string"   -- Implicit call with a single string argument
+		--   f {table}    -- Implicit call with a single table argument
+		function Parser:consumeFunctionCall(currentExpression, isMethodCall)
+			local currentToken     = self.currentToken
+			local currentTokenKind = currentToken.kind
+			local arguments
+		
+			-- Explicit call with parentheses: `f(a, b)`.
+			if currentTokenKind == "LeftParen" then
+				self:consume(1) -- Consume the left parenthesis '('.
+				arguments = self:consumeExpressions()
+				self:consumeToken("RightParen")
+		
+				-- Implicit call with a string: `print "hello" `
+			elseif currentTokenKind == "String" then
+				self:consume(1) -- Consume the string.
+				arguments = { {
+					kind  = "StringLiteral",
+					value = currentToken.value
+				} }
+		
+				-- Implicit call with a table: `f {1, 2, 3} `.
+			elseif currentTokenKind == "LeftBrace" then
+				arguments = { self:consumeTable() }
+			end
+		
+			return { kind = "FunctionCall",
+				callee       = currentExpression,
+				arguments    = arguments,
+				isMethodCall = isMethodCall and true,
+			}
+		end
+		
+		-- Parses a method call expression (e.g., `object:method(args)`), and
+		-- returns an AST node.
+		--
+		-- `currentExpression` is the AST node representing the object on which
+		-- the method is being called.
+		function Parser:consumeMethodCall(currentExpression)
+			self:consumeToken("Colon") -- Expect and consume the colon (':').
+			local methodName = self:consumeIdentifier()
+		
+			-- Convert the `table:method` part to an AST node.
+			local methodIndexNode = {
+				kind = "IndexExpression",
+				base = currentExpression,
+				index = { kind = "StringLiteral",
+					value = methodName
+				},
+			}
+		
+			-- Consume the function call and mark it as a method call.
+			return self:consumeFunctionCall(methodIndexNode, true)
+		end
+		
+		-- Consumes an optional semicolon if present.
+		-- (Lua allows optional semicolons between statements.)
+		function Parser:consumeOptionalSemicolon()
+			if self:checkCurTokenKind("Semicolon") then
+				self:consume(1)
+			end
+		end
+		
+		--// Expression Parsers //--
+		
+		-- Parses a primary expression (literal, variable, etc.).
+		-- This is the base of the expression hierarchy.
+		function Parser:parsePrimaryExpression()
+			local currentToken = self.currentToken
+			local tokenKind    = currentToken.kind
+			local tokenValue   = currentToken.value
+		
+			if tokenKind == "Number" then
+				local tokenRaw = currentToken.raw
+				self:consume(1)
+				return { kind = "NumericLiteral",
+					value = tokenValue,
+					raw   = tokenRaw
+				}
+			elseif tokenKind == "String" then
+				local tokenRaw = currentToken.raw
+				self:consume(1)
+				return { kind = "StringLiteral",
+					value = tokenValue,
+					raw   = tokenRaw
+				}
+			elseif tokenKind == "Vararg" then
+				self:consume(1)
+				return { kind = "VarargExpression" }
+			elseif tokenKind == "Keyword" then
+				-- Nil literal: `nil`.
+				if tokenValue == "nil" then
+					self:consume(1) -- Consume 'nil'.
+					return { kind = "NilLiteral" }
+		
+					-- Boolean literals: `true` or `false`.
+				elseif tokenValue == "true" or tokenValue == "false" then
+					self:consume(1) -- Consume 'true' or 'false'.
+					return { kind = "BooleanLiteral", value = (tokenValue == "true") }
+		
+					-- Anonymous function, e.g., `function(arg1) ... end`.
+				elseif tokenValue == "function" then
+					self:consume(1) -- Consume 'function'.
+					local parameters, isVararg = self:consumeParameters()
+					local body = self:parseFunctionBlock(parameters)
+					self:expectKeyword("end")
+					return { kind = "FunctionExpression",
+						body       = body,
+						parameters = parameters,
+						isVararg   = isVararg
+					}
+				end
+		
+				-- Variable, e.g., `MY_VAR`.
+			elseif tokenKind == "Identifier" then
+				return self:consumeVariable()
+		
+				-- Parenthesized expression, e.g., `(a + b)`.
+			elseif tokenKind == "LeftParen" then
+				self:consume(1) -- Consume '('
+				local expression = self:expectExpression()
+				self:expectTokenKind("RightParen") -- Expect and consume ')'.
+		
+				-- The "ParenthesizedExpression" node is NOT just for operator precedence.
+				-- In Lua, parentheses also force a multi-return expression to adjust to
+				-- a single value. e.g., `a, b = f()` is different from `a, b = (f())`.
+				-- Therefore, we must keep this wrapper node in the AST.
+				return { kind = "ParenthesizedExpression",
+					expression = expression
+				}
+		
+				-- Table constructor, e.g., `{ 42, "string", ["my"] = variable }`.
+			elseif tokenKind == "LeftBrace" then
+				return self:consumeTable()
+			end
+		
+			-- If no primary expression pattern is matched, return nil.
+			return nil
+		end
+		
+		-- Parses a prefix expression with possible suffixes (function calls, indexing).
+		-- Handles chaining of calls and accesses (e.g., `obj:method().field["key"]`).
+		function Parser:parsePrefixExpression()
+			local primaryExpression = self:parsePrimaryExpression() -- <primary>
+			if not primaryExpression then return end
+		
+			-- [ <suffix> ]*
+			while true do
+				local currentToken     = self.currentToken
+				local currentTokenKind = currentToken.kind
+		
+				-- Optimization: Instead of using self:checkTokenKind() here, we directly
+				-- access self.currentToken for performance reasons, as function calls
+				-- can add overhead in tight loops.
+		
+				-- Function call.
+				if currentTokenKind == "LeftParen" then
+					-- <expression>(<args>)
+					primaryExpression = self:consumeFunctionCall(primaryExpression, false)
+		
+					-- NOTE: Lua's grammar can be ambiguous when a function call is
+					-- followed by a parenthesized expression. A semicolon is often
+					-- needed to prevent error. Our parser does not enforce this.
+		
+					-- Table access.
+				elseif currentTokenKind == "Dot" or currentTokenKind == "LeftBracket" then
+					-- <expression>.<identifier> | <expression>[<expr>]
+					primaryExpression = self:consumeIndexExpression(primaryExpression)
+		
+					-- Method call.
+				elseif currentTokenKind == "Colon" then
+					-- <expression>:<identifier>(<args>)
+					primaryExpression = self:consumeMethodCall(primaryExpression)
+		
+					-- Implicit function call.
+				elseif currentTokenKind == "String" or currentTokenKind == "LeftBrace" then
+					-- <expression><string> | <expression><table_constructor>
+					-- In some edge cases, a user may call a function using only string,
+					-- example: `print "Hello, World!"`. This is a valid Lua syntax.
+					-- Let's handle both strings and tables here for that case.
+					primaryExpression = self:consumeFunctionCall(primaryExpression, false)
+				else
+					break
+				end
+			end
+		
+			return primaryExpression
+		end
+		
+		-- Parses a unary operator expression (e.g., `-x`, `not y`).
+		-- If a unary operator is not found, it falls back to parsing a primary expression.
+		function Parser:parseUnaryOperator()
+			-- <unary> ::= <unary operator> <unary> | <primary>
+			if not self:isUnaryOperator() then
+				return self:parsePrefixExpression()
+			end
+		
+			-- <unary operator> <unary>
+			local operator = self.currentToken.value
+			self:consume(1) -- Consume the operator
+			local operand = self:parseBinaryExpression(self.CONFIG.UNARY_PRECEDENCE)
+			if not operand then self:error("Unexpected end") end
+		
+			return { kind = "UnaryOperator",
+				operator = operator,
+				operand  = operand
+			}
+		end
+		
+		-- Parses a binary operator expression using the Precedence Climbing algorithm.
+		-- `minPrecedence` controls the minimum binding power for operators to consider.
+		function Parser:parseBinaryExpression(minPrecedence)
+			-- <binary> ::= <unary> <binary_operator> <binary> | <unary>
+			local expression = self:parseUnaryOperator() -- <unary>
+			if not expression then return end
+		
+			-- [<binary_operator> <binary>]
+			while self:isBinaryOperator() do
+				local operator   = self.currentToken.value
+				local precedence = self.CONFIG.PRECEDENCE[operator]
+				if precedence[1] <= minPrecedence then
+					break
+				end
+				self:consume(1) -- Consume the operator token.
+		
+				local right = self:parseBinaryExpression(precedence[2])
+				if not right then self:error("Unexpected end") end
+		
+				-- Construct a binary operator AST node.
+				expression = { kind = "BinaryOperator",
+					operator = operator,
+					left     = expression,
+					right    = right
+				}
+			end
+		
+			return expression
+		end
+		
+		-- Parses a single expression (entry point for expression parsing).
+		-- Returns nil if no valid expression is found.
+		function Parser:consumeExpression()
+			return self:parseBinaryExpression(0)
+		end
+		
+		-- Parses a single expression and throws an error if none is found.
+		function Parser:expectExpression()
+			local expression = self:consumeExpression()
+			if not expression then
+				self:error("Expected an expression, but found: " ..
+					self:getTokenDescription(self.currentToken))
+			end
+			return expression
+		end
+		
+		-- Parses a comma-separated list of expressions.
+		function Parser:consumeExpressions()
+			-- Make an expression list and consume the first expression.
+			local expressionList = { self:consumeExpression() }
+			if #expressionList == 0 then return { } end
+		
+			-- From now on, consume upcoming expressions only if
+			-- they are separated by a comma.
+			while self:isComma() do
+				self:consume(1) -- Consume the comma (',').
+				local expression = self:expectExpression()
+				table.insert(expressionList, expression)
+			end
+		
+			return expressionList
+		end
+		
+		--// STATEMENT PARSERS //--
+		
+		-- Parses a local variable or function declaration.
+		-- Handles both 'local var = value' and 'local function name() end' forms.
+		function Parser:parseLocalStatement()
+			-- local <ident_list> [= <expr_list>]
+			-- local function <ident>(<params>) <body> end
+			self:consumeToken("Keyword", "local")
+		
+			-- Check if it's a local function declaration.
+			-- local function <ident>(<params>) <body> end
+			if self:checkKeyword("function") then
+				self:consumeToken("Keyword", "function")
+				local functionName = self:consumeIdentifier()
+				local parameters, isVararg = self:consumeParameters()
+				self:declareLocalVariable(functionName)
+				local body = self:parseFunctionBlock(parameters)
+				self:expectKeyword("end")
+		
+				-- Unlike non-local function declarations (which desugar to assignments),
+				-- local function declarations require special handling to support recursion.
+				-- Consider: `local function foo() return foo() end`
+				-- If we naively translated this to `local foo = function() return foo() end`,
+				-- the inner `foo` would reference the global `foo` instead of the local one.
+				-- The correct desugaring is: `local foo; foo = function() return foo() end`,
+				-- but since our parser returns a single AST node per statement, we represent
+				-- local function declarations as a dedicated node type.
+				return { kind = "LocalFunctionDeclaration",
+					name = functionName,
+					body = {
+						kind       = "FunctionExpression",
+						body       = body,
+						parameters = parameters,
+						isVararg   = isVararg
+					}
+				}
+			end
+		
+			-- It's a regular local variable declaration.
+			-- <ident_list> [= <expr_list>]
+			local variables = self:consumeIdentifierList()
+			local initializers = {}
+		
+			-- Check for optional expressions.
+			if self:checkCurTokenKind("Equals") then
+				self:consume(1)
+				initializers = self:consumeExpressions()
+			end
+		
+			self:declareLocalVariables(variables)
+			return { kind = "LocalDeclarationStatement",
+				variables    = variables,
+				initializers = initializers
+			}
+		end
+		
+		function Parser:parseWhileStatement()
+			-- while <condition_expr> do <body> end
+			self:consumeToken("Keyword", "while")
+			local condition = self:expectExpression()
+			self:expectKeyword("do")
+			local body = self:parseLoopBlock()
+			self:expectKeyword("end")
+		
+			return { kind = "WhileStatement",
+				condition = condition,
+				body      = body
+			}
+		end
+		
+		function Parser:parseRepeatStatement()
+			-- repeat <body> until <condition_expr>
+			self:consumeToken("Keyword", "repeat")
+		
+			-- Note: There's a Lua edge case which allows local variables declared
+			-- inside the `repeat ... until` block to be used in the `until` condition.
+			-- Therefore, we enter the scope before parsing the code block,
+			-- but we only exit the scope after parsing the condition.
+			--
+			-- isFunctionScope: false, isLoopScope: true
+			self:enterScope(false, true)
+			local body = self:parseCodeBlockInCurrentScope()
+		
+			-- Don't exit the scope yet as its variables can still be used in the condition.
+			self:consumeToken("Keyword", "until")
+			local condition = self:expectExpression()
+			self:exitScope()
+		
+			return { kind = "RepeatStatement",
+				body      = body,
+				condition = condition
+			}
+		end
+		
+		function Parser:parseDoStatement()
+			-- do <body> end
+			self:consumeToken("Keyword", "do")
+			local body = self:parseCodeBlock()
+			self:expectKeyword("end")
+		
+			return { kind = "DoStatement",
+				body = body
+			}
+		end
+		
+		function Parser:parseReturnStatement()
+			-- return <expr_list>
+			self:consumeToken("Keyword", "return")
+			local expressions = self:consumeExpressions()
+		
+			return { kind = "ReturnStatement",
+				expressions = expressions
+			}
+		end
+		
+		function Parser:parseBreakStatement()
+			-- break
+			self:consumeToken("Keyword", "break")
+			if not self:canBreak() then
+				self:error("'break' statement not inside a loop")
+			end
+		
+			return { kind = "BreakStatement" }
+		end
+		
+		function Parser:parseIfStatement()
+			-- if <condition_expr> then <body>
+			--  [elseif <condition_expr> then <body>]*
+			--  [else <body>]
+			-- end
+		
+			-- if <condition_expr> then <body>
+			self:consumeToken("Keyword", "if")
+			local ifCondition = self:expectExpression()
+			self:consumeToken("Keyword", "then")
+			local ifBody = self:parseCodeBlock()
+			local clauses = {
+				-- First clause: the initial "if"
+				{ kind = "IfClause",
+					condition = ifCondition,
+					body      = ifBody
+				}
+			}
+		
+			-- [elseif <condition_expr> then <body>]*
+			while self:checkKeyword("elseif") do
+				-- Consume the "elseif" token
+				self:consumeToken("Keyword", "elseif")
+				local condition = self:expectExpression()
+				self:expectKeyword("then")
+				local body = self:parseCodeBlock()
+		
+				-- elseif <condition_expr> then <body>
+				local ifClause = { kind = "IfClause",
+					condition = condition,
+					body      = body
+				}
+				table.insert(clauses, ifClause)
+			end
+		
+			-- [else <body>]
+			local elseClause
+			if self:checkKeyword("else") then
+				self:consumeToken("Keyword", "else")
+				elseClause = self:parseCodeBlock()
+			end
+			self:expectKeyword("end")
+		
+			return { kind = "IfStatement",
+				clauses    = clauses,
+				elseClause = elseClause
+			}
+		end
+		
+		-- Parses a for loop (either numeric or generic iterator-based).
+		-- Distinguishes between 'for i=1,10' and 'for k,v in pairs(t)' forms.
+		function Parser:parseForStatement()
+			-- for <var> = <start_expr>, <limit_expr> [, <step_expr>] do ... end
+			-- for <ident_list> in <expr_list> do ... end
+			self:consumeToken("Keyword", "for")
+			local variableName = self:consumeIdentifier()
+		
+			-- At this point, we must distinguish between a generic `for` loop
+			-- (e.g., `for i, v in pairs(t)`) and a numeric `for` loop `(e.g., `for i = 1, 10`).
+			-- The presence of a comma or the `in` keyword signals a generic loop.
+			if self:checkCurTokenKind("Comma") or self:checkKeyword("in") then
+				-- It's a generic 'for' loop.
+				-- Even though the generic "for" loop allows infinite expressions after `in`,
+				-- the Lua VM only uses the first three return values from the expression(s)
+				-- for the iterator, state, and control variable.
+		
+				-- Parse the list of iterator variables.
+				local iteratorVariables = { variableName }
+				while self:checkCurTokenKind("Comma") do
+					self:consumeToken("Comma")
+					local newVariableName = self:consumeIdentifier()
+					table.insert(iteratorVariables, newVariableName)
+				end
+		
+				-- Parse the 'in' keyword and the iterator expressions.
+				self:expectKeyword("in")
+				local expressions = self:consumeExpressions()
+		
+				-- Parse the loop body.
+				self:consumeToken("Keyword", "do")
+				local body = self:parseLoopBlock(iteratorVariables)
+				self:expectKeyword("end")
+		
+				return { kind = "ForGenericStatement",
+					iterators   = iteratorVariables,
+					expressions = expressions,
+					body        = body
+				}
+			end
+		
+			-- It's a numeric 'for' loop.
+			-- Parse the '=' and the loop expressions.
+			self:consumeToken("Equals")
+			local expressions = self:consumeExpressions()
+			local startExpr = expressions[1]
+			local limitExpr = expressions[2]
+			local stepExpr  = expressions[3]
+			if not startExpr or not limitExpr then
+				self:error(
+					"Numeric 'for' loop requires at least a start and limit expression."
+				)
+			elseif #expressions > 3 then
+				self:error(
+					"Numeric 'for' loop allows at most a start, limit, "
+						.. "and optional step expression."
+				)
+			end
+		
+			-- Parse the loop body.
+			self:consumeToken("Keyword", "do")
+			local body = self:parseLoopBlock({ variableName })
+			self:expectKeyword("end")
+		
+			return { kind = "ForNumericStatement",
+				variable = variableName,
+				start    = startExpr,
+				limit    = limitExpr,
+				step     = stepExpr,
+				body     = body
+			}
+		end
+		
+		-- Parses a function declaration (both methods and regular functions).
+		--
+		-- It parses the following forms:
+		--   function func(params) ... end
+		--   function tb.method(params) ... end
+		--   function tb:method(params) ... end
+		--
+		-- Desugars into an assignment statement for consistency.
+		function Parser:parseFunctionDeclaration()
+			-- function <name>[.<field>]*[:<method>](<params>) <body> end
+			self:consumeToken("Keyword", "function")
+		
+			-- Parse the base function name (e.g., `myFunc` in `myFunc.new`).
+			local expression = self:consumeVariable()
+		
+			-- This loop handles `.field` and `:method` parts.
+			local isMethodDeclaration = false
+			while true do
+				local isDot   = self:checkCurTokenKind("Dot")
+				local isColon = self:checkCurTokenKind("Colon")
+		
+				if not (isDot or isColon) then
+					break -- The name chain has ended.
+				end
+		
+				self:consume(1) -- Consume the `.` or `:`.
+				local fieldName = self:consumeIdentifier()
+				expression = {
+					kind  = "IndexExpression",
+					base  = expression,
+					index = { kind = "StringLiteral",
+						value = fieldName
+					}
+				}
+		
+				if isColon then
+					isMethodDeclaration = true
+					break -- A method must be the last part of the name.
+				end
+			end
+		
+			-- Parse the parameter list.
+			local parameters, isVararg = self:consumeParameters()
+			if isMethodDeclaration then
+				-- For method declarations, we implicitly add `self` as the first parameter.
+				table.insert(parameters, 1, "self")
+			end
+		
+			-- Parse the function body and construct the final AST node.
+			local body = self:parseFunctionBlock(parameters)
+			self:expectKeyword("end")
+		
+			-- Non-local function declarations desugar to assignment statements.
+			-- Behaviorally, `function f() end` is equivalent to `f = function() end`.
+			-- This uniform representation simplifies code generation by eliminating
+			-- the need for a separate FunctionDeclaration node handler.
+			return {
+				kind    = "AssignmentStatement",
+				lvalues = { expression },
+				expressions = { {
+					kind       = "FunctionExpression",
+					body       = body,
+					parameters = parameters,
+					isVararg   = isVararg
+				} }
+			}
+		end
+		
+		-- Parses an assignment statement given the first lvalue.
+		-- Handles multiple lvalues: a, b.c, d[e] = expr1, expr2, expr3
+		function Parser:parseAssignment(lvalue)
+			-- <lvalue_list> = <expr_list>
+		
+			-- An assignment statement looks like: lvalue, lvalue, ... = expr, expr, ...
+			-- We've already parsed the first lvalue. Now we parse the rest of the list.
+			local lvalues = { lvalue }
+			while self:isComma() do
+				self:consume(1) -- Consume the comma (',')
+		
+				-- Parse the next potential lvalue in the list.
+				local nextLValue = self:parsePrefixExpression()
+		
+				-- Validate that what we parsed is actually a valid assignment target.
+				if not self:isValidAssignmentLvalue(nextLValue) then
+					self:error(
+						"Invalid assignment target: expected variable or table index, got "
+							.. tostring(nextLValue and nextLValue.kind or "nil")
+					)
+				end
+		
+				table.insert(lvalues, nextLValue)
+			end
+		
+			-- Now that we have all the lvalues, we expect the `=` sign.
+			self:expectTokenKind("Equals")
+			local expressions = self:consumeExpressions()
+		
+			return { kind = "AssignmentStatement",
+				lvalues     = lvalues,
+				expressions = expressions
+			}
+		end
+		
+		-- Parses a statement that begins with an expression (function call or assignment).
+		-- These are the only valid expression-statements in Lua.
+		function Parser:parseFunctionCallOrAssignmentStatement()
+			-- This function handles statements that begin with an expression.
+			-- In Lua, these can only be variable assignments or function calls.
+			local expression = self:parsePrefixExpression()
+		
+			if not expression then
+				self:error(
+					string.format(
+						"Invalid statement: expected a variable or function call, but got %s",
+						self:getTokenDescription(self.currentToken)
+					)
+				)
+			end
+		
+			-- Check if it's a function call statement (e.g., `myFunc()`).
+			if expression.kind == "FunctionCall" then
+				return { kind = "CallStatement",
+					expression = expression
+				}
+			end
+		
+			-- Check if it's the start of an assignment (e.g., `myVar = ...`).
+			-- Only Variable and IndexExpression nodes can be lvalues.
+			if self:isValidAssignmentLvalue(expression) then
+				return self:parseAssignment(expression)
+			end
+		
+			-- If we reach here, the expression is not a valid statement.
+			-- For example, a line like `x + 1` is a valid expression but not a valid statement.
+			self:error(
+				string.format(
+					"Invalid statement: expected a variable or function call, but got '%s'",
+					expression.kind
+				)
+			)
+		end
+		
+		--// CODE BLOCK PARSERS //--
+		
+		-- Parses the next statement in a code block.
+		-- This function acts as a dispatcher, determining which specific parsing
+		-- function to call based on the current token.
+		function Parser:getNextNode()
+			local node
+		
+			-- Optimization: Instead of using self:checkTokenKind() here, we directly
+			-- access self.currentToken for performance reasons, as function calls
+			-- can add overhead in tight loops.
+			local currentToken = self.currentToken
+			local tokenKind    = currentToken.kind
+			if tokenKind == "Keyword" then
+				local keyword = currentToken.value
+		
+				-- First, check for keywords that terminate a block. If found, we stop
+				-- parsing this block and let the parent parser handle the keyword.
+				if self.CONFIG.TERMINATION_KEYWORDS[keyword] then
+					return nil -- Signal to stop parsing the current block.
+				end
+		
+				local handlerName = self.CONFIG.KEYWORD_HANDLERS[keyword]
+				if not handlerName then
+					self:error("Unsupported keyword used as a statement starter: " .. keyword)
+				end
+		
+				node = self[handlerName](self) -- e.g., self:parseWhile().
+			elseif tokenKind == "EOF" then
+				-- End of file reached; no more statements to parse.
+				return nil
+			else
+				-- If the statement doesn't start with a keyword, it must be a
+				-- variable assignment or a function call.
+				node = self:parseFunctionCallOrAssignmentStatement()
+			end
+		
+			-- Statements can optionally be separated by a semicolon.
+			-- In Lua 5.1, semicolons can't be standalone statements,
+			-- so they always have to follow a statement.
+			self:consumeOptionalSemicolon()
+		
+			return node
+		end
+		
+		-- A special function needed for the `repeat-until` statement edge case.
+		-- Unlike in the :parseCodeBlock() method, we don't push scope here as
+		-- local variables defined inside `repeat-until` statement can still be
+		-- used in the `until`s expression.
+		function Parser:parseCodeBlockInCurrentScope()
+			local node = { kind = "Block", statements = {} }
+			local nodeList  = node.statements
+			local nodeCount = 0
+		
+			while true do
+				-- Parse statements one by one until a terminator is found.
+				local nextNode = self:getNextNode()
+				if not nextNode then
+					-- A terminating keyword was found.
+					break
+				end
+		
+				-- Optimization: Avoid using table.insert in a loop, which can be slow.
+				nodeCount = nodeCount + 1
+				nodeList[nodeCount] = nextNode
+			end
+		
+			return node
+		end
+		
+		-- Parses a code block, managing scope entry and exit.
+		-- variables: optional list of local variables to declare in the block.
+		-- isFunctionScope: whether this block is a function scope.
+		-- isLoopScope: whether this block is a loop scope.
+		function Parser:parseCodeBlock(variables, isFunctionScope, isLoopScope)
+			self:enterScope(isFunctionScope, isLoopScope)
+			if variables then
+				self:declareLocalVariables(variables)
+			end
+			local blockNode = self:parseCodeBlockInCurrentScope()
+			self:exitScope()
+			return blockNode
+		end
+		
+		function Parser:parseFunctionBlock(parameters)
+			return self:parseCodeBlock(parameters, true, false)
+		end
+		
+		function Parser:parseLoopBlock(variables)
+			return self:parseCodeBlock(variables, false, true)
+		end
+		
+		--// MAIN //--
+		
+		-- Main entry point for parsing.
+		-- Returns the complete AST wrapped in a Program node.
+		function Parser:parse()
+			local blockNode = self:parseCodeBlock()
+			self:consumeToken("EOF") -- Ensure we've reached the end of the input.
+		
+			return {
+				kind = "Program",
+				body = blockNode
+			}
+		end
+		
+		--[[
+		    ============================================================================
+		                                (づ｡◕‿‿◕｡)づ
+		                            THE CODE GENERATOR!!!
+		    ============================================================================
+		
+		    Possibly the most complex part of the compiler, the Code Generator is
+		    responsible for converting the AST into Lua instructions, which are
+		    similar to assembly instructions, but they are much higher level,
+		    because they're being executed in the Lua VM (Virtual Machine),
+		    not on a physical CPU. The Code Generator will also be responsible
+		    for generating the function prototypes, which are used to store
+		    information about the function, such as the number of arguments,
+		    the number of local variables, and the number of upvalues.
+		--]]
+		
+		--* CodeGenerator *--
+		local CodeGenerator = {}
+		CodeGenerator.__index = CodeGenerator
+		
+		CodeGenerator.CONFIG = {
+			-- Stack Limits.
+			-- Lua 5.1 allows up to 255 registers per function. We reserve a few for
+			-- internal safety, capping user registers slightly lower.
+			MIN_STACK_SIZE = 2,
+			MAX_REGISTERS  = 250,
+		
+			-- Maximum amount of elements for a single SETLIST instruction.
+			-- If more elements are needed, multiple SETLIST instructions are emitted.
+			SETLIST_MAX = 50,
+		
+			-- Node kinds that can return multiple values (multiret).
+			-- These require special handling when they appear as the last element
+			-- of a list (e.g., `return f()`).
+			MULTIRET_NODES = createLookupTable({"FunctionCall", "VarargExpression"}),
+		
+			CONTROL_FLOW_OPERATOR_LOOKUP = createLookupTable({"and", "or"}),
+		
+			-- stylua: ignore
+			UNARY_OPERATOR_LOOKUP = {
+				["-"]   = "UNM",
+				["#"]   = "LEN",
+				["not"] = "NOT"
+			},
+		
+			-- stylua: ignore
+			ARITHMETIC_OPERATOR_LOOKUP = {
+				["+"] = "ADD", ["-"] = "SUB",
+				["*"] = "MUL", ["/"] = "DIV",
+				["%"] = "MOD", ["^"] = "POW"
+			},
+		
+			-- Format: [operator] = {opname, opposite}
+			-- stylua: ignore
+			COMPARISON_INSTRUCTION_LOOKUP = {
+				["=="] = {"EQ", 1}, ["~="] = {"EQ", 0},
+				["<"]  = {"LT", 1}, [">"]  = {"LT", 1},
+				["<="] = {"LE", 1}, [">="] = {"LE", 1}
+			},
+		}
+		
+		function CodeGenerator.new(ast)
+			--// Asserting //--
+			assert(
+				type(ast) == "table",
+				"Expected 'ast' argument to be a table, got: " .. type(ast)
+			)
+			assert(
+				ast.kind == "Program",
+				"Expected 'ast' to be a 'Program' node, got: " .. ast.kind
+			)
+		
+			--// Initialization //--
+			return setmetatable({
+				ast   = ast,
+				proto = nil,
+		
+				-- Scope-related fields declaration
+				currentScope = nil,
+				breakJumpPCs = nil,
+			}, CodeGenerator)
+		end
+		
+		--// Scope Management //--
+		
+		-- Used to check for register leaks when leaving a scope.
+		function CodeGenerator:checkForRegisterLeaks()
+			local currentScope = self.currentScope
+			if not currentScope then return end
+			if not currentScope.isFunction then return end
+		
+			local currentRegisters = currentScope.allocatedRegisters
+			if currentRegisters == 0 then return end
+		
+			-- Since all permanent registers are local variables/arguments, we can
+			-- count how many local variables are declared in this scope to determine
+			-- how many registers should be in use at most.
+		
+			-- Arguments are treated as local variables.
+			local variableCount = 0
+			for _ in pairs(currentScope.locals) do
+				variableCount = variableCount + 1
+			end
+		
+			if currentRegisters > variableCount then
+				error(
+					string.format(
+						"CodeGenerator: Register leak detected when leaving function scope! "
+							.. "Expected at most %d registers in use, but found %d.",
+						variableCount,
+						currentRegisters
+					)
+				)
+			end
+		end
+		
+		function CodeGenerator:enterScope(isFunctionScope)
+			local parentScope = self.currentScope
+			local allocatedRegisters = 0
+		
+			-- Is there a parent scope? If so, inherit its register count,
+			-- unless we're entering a function scope (which starts fresh).
+			if parentScope and not isFunctionScope then
+				allocatedRegisters = parentScope.allocatedRegisters
+			end
+		
+			local childScope = {
+				locals             = {},
+				parentScope        = parentScope,
+				isFunction         = (isFunctionScope and true) or false,
+				needClose          = false,
+				allocatedRegisters = allocatedRegisters
+			}
+			self.currentScope = childScope
+			return childScope
+		end
+		
+		function CodeGenerator:leaveScope()
+			local currentScope = self.currentScope
+			if not currentScope then
+				error("CodeGenerator: No scope to leave!")
+			end
+		
+			self:checkForRegisterLeaks()
+		
+			local needClose = currentScope.needClose and not currentScope.isFunction
+			self.currentScope = currentScope.parentScope
+		
+			if needClose then
+				if self.breakJumpPCs then
+					self.breakJumpPCs.needClose = true
+				end
+		
+				-- OP_CLOSE [A]    close all variables in the stack up to (>=) R(A)
+				self:emitInstruction("CLOSE", self.currentScope.allocatedRegisters, 0, 0)
+			end
+		end
+		
+		--// Variable Management //--
+		function CodeGenerator:declareLocalVariable(varName, register)
+			register = register or self:allocateRegisters(1)
+			self.currentScope.locals[varName] = register
+			return register
+		end
+		
+		function CodeGenerator:declareLocalVariables(varNames)
+			for _, varName in ipairs(varNames) do
+				self:declareLocalVariable(varName)
+			end
+		end
+		
+		-- Finds the variable register index in current function scope.
+		function CodeGenerator:findVariableRegister(varName)
+			local scope = self.currentScope
+			while scope do
+				local register = scope.locals[varName]
+				if register then
+					return register
+				elseif scope.isFunction then
+					break
+				end
+				scope = scope.parentScope
+			end
+		
+			error(
+				string.format(
+					"CodeGenerator: Could not find variable '%s' in any scope.",
+					tostring(varName)
+				)
+			)
+		end
+		
+		-- Determines whether a variable is local, upvalue, or global.
+		function CodeGenerator:getUpvalueType(variableName)
+			local scope = self.currentScope
+			local isUpvalue = false
+			while scope do
+				if scope.locals[variableName] then
+					scope.needClose = true
+					return (isUpvalue and "Upvalue") or "Local"
+				elseif scope.isFunction then
+					isUpvalue = true
+				end
+				scope = scope.parentScope
+			end
+		
+			return "Global"
+		end
+		
+		--// Prototype Management //--
+		function CodeGenerator:createPrototype(properties)
+			return {
+				code         = {},
+				constants    = {},
+				upvalues     = {},
+				protos       = {},
+				maxStackSize = self.CONFIG.MIN_STACK_SIZE,
+		
+				numParams = properties.numParams or 0,
+				isVararg  = properties.isVararg  or false,
+		
+				-- Internal lookups for quick access.
+				constantLookup = {}, -- format: {[constant] = index in proto.constants}
+				upvalueLookup  = {}, -- format: {[varName]  = index in proto.upvalues}
+			}
+		end
+		
+		--// Register/Constant/Upvalue Management //--
+		
+		-- Allocates `count` registers and returns the index of the last allocated register.
+		function CodeGenerator:allocateRegisters(count)
+			if count <= 0 then return end -- Just ignore non-positive counts.
+		
+			local previousStackSize = self.currentScope.allocatedRegisters
+			local updatedStackSize  = previousStackSize + count
+			if updatedStackSize > self.CONFIG.MAX_REGISTERS then
+				error(
+					string.format(
+						"CodeGenerator: Register overflow! exceeded maximum of %d registers.",
+						self.CONFIG.MAX_REGISTERS
+					)
+				)
+			end
+		
+			self.currentScope.allocatedRegisters = updatedStackSize
+			if updatedStackSize >= self.proto.maxStackSize then
+				self.proto.maxStackSize = updatedStackSize
+			end
+		
+			return updatedStackSize - 1
+		end
+		
+		function CodeGenerator:allocateTemporaryRegisters(count)
+			return self:allocateRegisters(count)
+		end
+		
+		-- Frees `count` registers from the top of the stack.
+		function CodeGenerator:freeRegisters(count)
+			if count <= 0 then return end -- Just ignore non-positive counts.
+		
+			local stackSize = self.currentScope.allocatedRegisters - count
+			if stackSize < 0 then
+				error("CodeGenerator: Stack underflow! cannot free below minimum of 0 registers.")
+			end
+		
+			self.currentScope.allocatedRegisters = stackSize
+		end
+		
+		-- A helper function for freeing RK operands.
+		function CodeGenerator:freeIfRegister(rkOperand)
+			-- Is it a register?
+			if rkOperand >= 0 then
+				self:freeRegisters(1)
+			end
+		
+			-- If it's below 0, it's a constant index, do nothing.
+		end
+		
+		-- Note:
+		--  Constant indices are returned as negative numbers (e.g., -1 for the first
+		--  constant) to distinguish them from register indices, which are non-negative.
+		--  This mirrors how Lua 5.1's VM encodes RK (Register or Konstant) operands in
+		--  bytecode: registers use values 0-255, while constants are encoded as 256
+		--  plus the absolute constant index. By using negative indices internally,
+		--  TLC simplifies operand handling without losing compatibility.
+		function CodeGenerator:findOrCreateConstant(value)
+			local constantLookup = self.proto.constantLookup
+			local constants      = self.proto.constants
+			local constantIndex  = constantLookup[value]
+		
+			-- Hot path: Constant already exists, return its index.
+			if constantIndex then
+				return constantIndex
+			end
+		
+			-- Cold path: New constant, add it to the table.
+			table.insert(constants, value)
+			constantIndex = -#constants -- Constant indices are negative-based.
+			constantLookup[value] = constantIndex
+			return constantIndex
+		end
+		
+		function CodeGenerator:findOrCreateUpvalue(varName)
+			local upvalueLookup = self.proto.upvalueLookup
+			local upvalues      = self.proto.upvalues
+			local upvalueIndex  = upvalueLookup[varName]
+		
+			-- Hot path: Upvalue already exists, return its index.
+			if upvalueIndex then
+				return upvalueIndex
+			end
+		
+			-- Cold path: New upvalue, add it to the table.
+			table.insert(upvalues, varName)
+		
+			-- Lua upvalue indices are 0-based, table indices are 1-based.
+			-- Therefore, we subtract 1 from the length.
+			upvalueIndex = #upvalues - 1
+			upvalueLookup[varName] = upvalueIndex
+			return upvalueIndex
+		end
+		
+		-- Used for RK() operands (Register or Konstant).
+		-- If it's a register it has to get free'd later.
+		function CodeGenerator:processConstantOrExpression(node, register)
+			local nodeKind = node.kind
+		
+			-- Is it a constant?
+			if nodeKind == "NumericLiteral" or nodeKind == "StringLiteral" then
+				local constantIndex = self:findOrCreateConstant(node.value)
+		
+				-- Check if it can fit in 9-bit signed RK operand.
+				if -constantIndex < 255 then
+					-- Returns a negative index to indicate it's a constant.
+					return constantIndex
+				end
+			end
+		
+			-- Otherwise, process it as an expression
+			return self:processExpressionNode(node, register)
+		end
+		
+		--// Instruction Management //--
+		
+		-- TODO: Should we switch to different instruction representations?
+		-- E.g. `{opcode = 0, opname = "MOVE", a = 0, b = 1, c = 0}`?
+		function CodeGenerator:emitInstruction(opname, a, b, c)
+			if not a then
+				error("CodeGenerator: Missing 'a' operand for instruction " .. opname)
+			elseif not b then
+				error("CodeGenerator: Missing 'b' operand for instruction " .. opname)
+			end
+		
+			local instruction = { opname, a, b, c or 0 }
+			table.insert(self.proto.code, instruction)
+		
+			return instruction
+		end
+		
+		function CodeGenerator:emitJump(offset)
+			-- OP_JMP [A, sBx]    pc+=sBx
+			self:emitInstruction("JMP", 0, offset or 1, 0)
+		
+			local instructionIndex = #self.proto.code
+			return instructionIndex
+		end
+		
+		function CodeGenerator:emitJumpBack(toPC)
+			local currentPC = #self.proto.code + 1
+			local offset    = toPC - currentPC
+		
+			-- OP_JMP [A, sBx]    pc+=sBx
+			self:emitJump(offset)
+		end
+		
+		function CodeGenerator:patchJump(fromPC, toPC)
+			local instruction = self.proto.code[fromPC]
+			if not instruction then
+				error(
+					"CodeGenerator: Invalid 'fromPC' for jump patching: "
+						.. tostring(fromPC)
+				)
+			end
+		
+			local offset = toPC - (fromPC + 1)
+			instruction[3] = offset
+		end
+		
+		function CodeGenerator:patchJumpToHere(fromPC)
+			local currentPC = #self.proto.code + 1
+			self:patchJump(fromPC, currentPC)
+		end
+		
+		function CodeGenerator:patchJumpsToHere(jumpPCs)
+			if not jumpPCs then return end
+			for _, pc in ipairs(jumpPCs) do
+				self:patchJumpToHere(pc)
+			end
+		end
+		
+		--// Wrappers //--
+		function CodeGenerator:breakable(callback)
+			local previousBreakJumpPCs = self.breakJumpPCs
+			self.breakJumpPCs = {}
+		
+			callback()
+		
+			-- Patch all breaks to here.
+			self:patchJumpsToHere(self.breakJumpPCs)
+			if #self.breakJumpPCs > 0 and self.breakJumpPCs.needClose then
+				-- OP_CLOSE [A]    close all variables in the stack up to (>=) R(A)
+				self:emitInstruction("CLOSE", self.currentScope.allocatedRegisters, 0, 0)
+			end
+		
+			self.breakJumpPCs = previousBreakJumpPCs
+		end
+		
+		--// Auxiliary/Helper Methods //--
+		
+		-- Determines whether a node can return values up to the top of the stack.
+		function CodeGenerator:isMultiReturnNode(node)
+			return node and self.CONFIG.MULTIRET_NODES[node.kind]
+		end
+		
+		-- Determines whether the last expression in a list is a multiret.
+		function CodeGenerator:isMultiReturnList(expressions)
+			if #expressions == 0 then return false end
+		
+			local lastExpression = expressions[#expressions]
+			return self:isMultiReturnNode(lastExpression)
+		end
+		
+		-- Used to check if we can optimize a `return <func_call>` into a tail call.
+		function CodeGenerator:isSingleFunctionCall(expressions)
+			if #expressions ~= 1 then return false end
+		
+			local expression = expressions[1]
+			return expression.kind == "FunctionCall"
+		end
+		
+		-- Splits table's elements into implicit and explicit key elements.
+		function CodeGenerator:splitTableElements(elements)
+			local implicitElems = {}
+			local explicitElems = {}
+			for _, element in ipairs(elements) do
+				if element.isImplicitKey then
+					table.insert(implicitElems, element)
+				else
+					table.insert(explicitElems, element)
+				end
+			end
+		
+			return implicitElems, explicitElems
+		end
+		
+		-- Sets the value of the list of variables or table indices from a range of registers.
+		function CodeGenerator:assignValuesToRegisters(nodes, index, copyFromRegister)
+			if index > #nodes then return end
+			local node     = nodes[index]
+			local nodeKind = node.kind
+		
+			if nodeKind == "Variable" then
+				-- First give the other index assignments a chance
+				-- to read the base and index before it might change.
+				self:assignValuesToRegisters(nodes, index + 1, copyFromRegister + 1)
+		
+				local variableType = node.variableType
+				local variableName = node.name
+				if variableType == "Local" then
+					local variableRegister = self:findVariableRegister(variableName)
+					-- OP_MOVE [A, B]    R(A) := R(B)
+					self:emitInstruction("MOVE", variableRegister, copyFromRegister)
+				elseif variableType == "Upvalue" then
+					local upvalueIndex = self:findOrCreateUpvalue(variableName)
+					-- OP_SETUPVAL [A, B]    UpValue[B] := R(A)
+					self:emitInstruction("SETUPVAL", copyFromRegister, upvalueIndex)
+				elseif variableType == "Global" then
+					local constantIndex = self:findOrCreateConstant(variableName)
+					-- OP_SETGLOBAL [A, Bx]    Gbl[Kst(Bx)] := R(A)
+					self:emitInstruction("SETGLOBAL", copyFromRegister, constantIndex)
+				end
+		
+				return
+			elseif nodeKind == "IndexExpression" then
+				local baseNode  = node.base
+				local indexNode = node.index
+		
+				local baseRegister  = self:processConstantOrExpression(baseNode)
+				local indexRegister = self:processConstantOrExpression(indexNode)
+		
+				-- This index assignment did read its base and index.
+				-- Now give other index assignments a chance before doing the assignment.
+				self:assignValuesToRegisters(nodes, index + 1, copyFromRegister + 1)
+		
+				-- OP_SETTABLE [A, B, C]    R(A)[RK(B)] := RK(C)
+				self:emitInstruction("SETTABLE", baseRegister, indexRegister, copyFromRegister)
+				self:freeIfRegister(baseRegister)
+				self:freeIfRegister(indexRegister)
+		
+				return
+			end
+		
+			error(
+				"CodeGenerator: Unsupported lvalue kind in assignValuesToRegisters: "
+					.. nodeKind
+			)
+		end
+		
+		-- Processes a single page (50 or less) of implicit table elements.
+		function CodeGenerator:processTablePage(
+			register,
+			implicitElems,
+			page,
+			totalPages,
+			isLastElemImplicit
+		)
+			local batchSize    = self.CONFIG.SETLIST_MAX
+			local startIndex   = (page - 1) * batchSize + 1
+			local endIndex     = math.min(page * batchSize, #implicitElems)
+			local elementCount = endIndex - startIndex + 1
+		
+			local isLastPage  = (page == totalPages)
+			local lastElement = implicitElems[#implicitElems]
+		
+			-- Determine if the last element of this batch is the absolute last element
+			-- of the table constructor AND if it should be treated as a multiret.
+			local isMultiret = isLastPage
+				and isLastElemImplicit
+				and self:isMultiReturnNode(lastElement.value)
+		
+			for i = startIndex, endIndex do
+				local isLastInBatch = (i == endIndex)
+				-- Only the absolute last element gets -1 (multiret), others get 1.
+				local returnCount  = (isLastInBatch and isMultiret and -1) or 1
+				local elemValue    = implicitElems[i].value
+				local elemRegister = self:allocateRegisters(1)
+		
+				self:processExpressionNode(elemValue, elemRegister, returnCount)
+			end
+		
+			-- B = 0 means "take all values from stack top" (used for multiret).
+			-- Otherwise, B is the number of elements to set.
+			local setListCount = (isMultiret and 0) or elementCount
+		
+			-- OP_SETLIST [A, B, C]    R(A)[(C-1)*FPF+i] := R(A+i), 1 <= i <= B
+			self:emitInstruction("SETLIST", register, setListCount, page)
+			self:freeRegisters(elementCount)
+		end
+		
+		--// Expression Handlers //--
+		function CodeGenerator:NilLiteral(_, register)
+			-- OP_LOADNIL [A, B]    R(A) := ... := R(B) := nil
+			self:emitInstruction("LOADNIL", register, register, 0)
+			return register
+		end
+		
+		function CodeGenerator:BooleanLiteral(node, register)
+			local value = (node.value and 1) or 0
+		
+			-- OP_LOADBOOL [A, B, C]    R(A) := (Bool)B; if (C) pc++
+			self:emitInstruction("LOADBOOL", register, value, 0)
+			return register
+		end
+		
+		function CodeGenerator:NumericLiteral(node, register)
+			local value         = node.value
+			local constantIndex = self:findOrCreateConstant(value)
+		
+			-- OP_LOADK [A, Bx]    R(A) = Kst(Bx)
+			self:emitInstruction("LOADK", register, constantIndex, 0)
+			return register
+		end
+		
+		function CodeGenerator:StringLiteral(node, register)
+			local value         = node.value
+			local constantIndex = self:findOrCreateConstant(value)
+		
+			-- OP_LOADK [A, Bx]    R(A) = Kst(Bx)
+			self:emitInstruction("LOADK", register, constantIndex, 0)
+			return register
+		end
+		
+		function CodeGenerator:ParenthesizedExpression(node, register)
+			local expression = node.expression
+			return self:processExpressionNode(expression, register)
+		end
+		
+		function CodeGenerator:BinaryOperator(node, register)
+			local operator = node.operator
+			local left     = node.left
+			local right    = node.right
+		
+			-- Simple arithmetic operators (+, -, /, *, %, ^)
+			if self.CONFIG.ARITHMETIC_OPERATOR_LOOKUP[operator] then
+				local opcode = self.CONFIG.ARITHMETIC_OPERATOR_LOOKUP[operator]
+		
+				local rightOperand = self:processConstantOrExpression(left, register)
+				local leftOperand  = self:processConstantOrExpression(right)
+				self:emitInstruction(opcode, register, rightOperand, leftOperand)
+		
+				-- Don't deallocate `rightOperand` as it is `register`.
+				self:freeIfRegister(leftOperand)
+		
+				return register
+		
+				-- Control flow operators (and, or)
+			elseif self.CONFIG.CONTROL_FLOW_OPERATOR_LOOKUP[operator] then
+				self:processExpressionNode(left, register)
+				local isConditionTrue = (operator == "and" and 0) or 1
+				-- OP_TEST [A, C]    if not (R(A) <=> C) then pc++
+				self:emitInstruction("TEST", register, 0, isConditionTrue)
+				local jumpPC = self:emitJump()
+				self:processExpressionNode(right, register)
+				self:patchJumpToHere(jumpPC)
+		
+				return register
+		
+				-- Comparison operators (==, ~=, <, >, <=, >=)
+			elseif self.CONFIG.COMPARISON_INSTRUCTION_LOOKUP[operator] then
+				local leftReg      = self:processConstantOrExpression(left, register)
+				local rightReg     = self:processConstantOrExpression(right)
+				local nodeOperator = self.CONFIG.COMPARISON_INSTRUCTION_LOOKUP[operator]
+				local instruction, opposite = nodeOperator[1], nodeOperator[2]
+		
+				local flip = (operator == ">" or operator == ">=")
+				local b, c = leftReg, rightReg
+				if flip then b, c = rightReg, leftReg end
+		
+				self:emitInstruction(instruction, opposite, b, c)
+				self:emitJump(1) -- Skip next instruction if comparison is false.
+		
+				-- OP_LOADBOOL [A, B, C]    R(A) := (Bool)B; if (C) pc++
+				self:emitInstruction("LOADBOOL", register, 0, 1)
+				self:emitInstruction("LOADBOOL", register, 1, 0)
+		
+				-- Don't deallocate `leftReg` as it is `register`.
+				self:freeIfRegister(rightReg)
+		
+				return register
+		
+				-- String concatenation (..)
+			elseif operator == ".." then
+				local bottomRegister = self:processExpressionNode(left)
+		
+				-- Optimization: Flatten consecutive concatenations.
+				-- That will help us reduce the number of CONCAT instructions.
+				-- For example, the expression:
+				--  "Hello, " .. "world" .. "!"
+				-- Will be compiled into:
+				--  LOADK 0, -1     ; "Hello, "
+				--  LOADK 1, -2     ; "world"
+				--  LOADK 2, -3     ; "!"
+				--  CONCAT 3, 0, 2  ; R(3) = R(0) .. R(1) .. R(2)
+				local curRight = right
+				while curRight.operator == ".." do
+					-- The expression is guaranteed to take only one register.
+					self:processExpressionNode(curRight.left)
+					curRight = curRight.right -- Advance to the next right node.
+				end
+		
+				local topRegister = self:processExpressionNode(curRight)
+		
+				-- OP_CONCAT [A, B, C]    R(A) := R(B).. ... ..R(C)
+				self:emitInstruction("CONCAT", register, bottomRegister, topRegister)
+				self:freeRegisters(topRegister - bottomRegister + 1)
+		
+				return register
+			end
+		
+			error("CodeGenerator: Unsupported binary operator: " .. operator)
+		end
+		
+		function CodeGenerator:UnaryOperator(node, register)
+			local operator = node.operator
+			local operand  = node.operand
+			local opname   = self.CONFIG.UNARY_OPERATOR_LOOKUP[operator]
+			if not opname then
+				error("CodeGenerator: Unsupported unary operator: " .. operator)
+			end
+		
+			self:processExpressionNode(operand, register)
+			self:emitInstruction(opname, register, register)
+		
+			return register
+		end
+		
+		function CodeGenerator:TableConstructor(node, register)
+			local elements    = node.elements
+			local lastElement = node.elements[#node.elements]
+			local isLastElementImplicit = lastElement and lastElement.isImplicitKey
+			local implicitElems, explicitElems = self:splitTableElements(elements)
+		
+			-- TODO: We're doing wrong calculation, fix it later.
+			-- https://www.lua.org/source/5.1/lparser.c.html#constructor
+			-- https://www.lua.org/source/5.1/lobject.c.html#luaO_int2fb
+			local implicitElemSize = math.min(#implicitElems, 100)
+			local explicitElemSize = math.min(#explicitElems, 100)
+		
+			-- OP_NEWTABLE [A, B, C]    R(A) := {} (size = B,C)
+			self:emitInstruction("NEWTABLE", register, implicitElemSize, explicitElemSize)
+		
+			for _, elem in ipairs(explicitElems) do
+				local keyRegister   = self:processExpressionNode(elem.key)
+				local valueRegister = self:processExpressionNode(elem.value)
+		
+				-- OP_SETTABLE [A, B, C]    R(A)[RK(B)] := RK(C)
+				self:emitInstruction("SETTABLE", register, keyRegister, valueRegister)
+				self:freeRegisters(2)
+			end
+		
+			local totalPages = math.ceil(#implicitElems / self.CONFIG.SETLIST_MAX)
+		
+			-- Table page limit in SETLIST instructions.
+			-- The C operand is 9 bits, limiting it to 511 (1-511 valid range).
+			-- This caps table constructors at 511 * SETLIST_MAX elements (25550 with SETLIST_MAX=50).
+			-- Official Lua 5.1 handles overflows by setting C=0 and encoding the page count
+			-- in the next pseudo-instruction. TLC errors out instead for simplicity.
+			if totalPages >= 512 then
+				error("CodeGenerator: Table constructor page overflow! Maximum of 511 pages allowed.")
+			end
+		
+			for page = 1, totalPages do
+				self:processTablePage(
+					register,
+					implicitElems,
+					page,
+					totalPages,
+					isLastElementImplicit
+				)
+			end
+		
+			return register
+		end
+		
+		function CodeGenerator:Variable(node, register)
+			local varName = node.name
+			local varType = node.variableType -- "Local" / "Upvalue" / "Global"
+		
+			if varType == "Local" then
+				-- Local variables are stored in the closure's stack (registers).
+				local variable = self:findVariableRegister(varName)
+		
+				-- OP_MOVE [A, B]    R(A) := R(B)
+				self:emitInstruction("MOVE", register, variable)
+			elseif varType == "Global" then
+				-- Globals are stored in the global environment table.
+				local constantIndex = self:findOrCreateConstant(varName)
+		
+				-- OP_GETGLOBAL [A, Bx]    R(A) := Gbl[Kst(Bx)]
+				self:emitInstruction("GETGLOBAL", register, constantIndex)
+			elseif varType == "Upvalue" then
+				-- Upvalues are stored in the function's upvalue list.
+				local upvalueIndex = self:findOrCreateUpvalue(varName)
+		
+				-- OP_GETUPVAL [A, B]    R(A) := UpValue[B]
+				self:emitInstruction("GETUPVAL", register, upvalueIndex)
+			end
+		
+			return register
+		end
+		
+		function CodeGenerator:FunctionCall(node, register, resultRegisters)
+			local callee       = node.callee
+			local arguments    = node.arguments
+			local isMethodCall = node.isMethodCall
+		
+			-- Method calls (e.g., `obj:method()`) need special handling.
+			-- We need to load the `self` parameter (the table) into the
+			-- register before the function call, so we use the `SELF` instruction.
+			if isMethodCall then
+				local calleeExpressionIndex = callee.index
+				local calleeExpressionBase  = callee.base
+		
+				self:processExpressionNode(calleeExpressionBase, register)
+				self:allocateRegisters(1) -- Used for implicit `self` argument.
+		
+				local calleeIndexRegister = self:processConstantOrExpression(calleeExpressionIndex)
+		
+				-- OP_SELF [A, B, C]    R(A+1) := R(B); R(A) := R(B)[RK(C)]
+				self:emitInstruction("SELF", register, register, calleeIndexRegister)
+		
+				self:freeIfRegister(calleeIndexRegister)
+			else
+				self:processExpressionNode(callee, register)
+			end
+		
+			local argumentRegisterCount, numArgs = self:processExpressionList(arguments)
+			local isArgsMultiRet = self:isMultiReturnList(arguments)
+			if isMethodCall then
+				-- Make sure the `CALL` instruction captures the "self" (table) param.
+				argumentRegisterCount = argumentRegisterCount + 1
+				if not isArgsMultiRet then
+					-- Check if it's not multiret, as multiret already includes all args.
+					-- Increasing it by one again in `argumentCount` would turn multiret into a
+					-- fixed count (0 + 1 = 1), which will make it capture zero args instead of all.
+					numArgs = numArgs + 1
+				end
+			end
+		
+			-- Convert `numArgs` from our representation (where -1 = MULTIRET, >= 0 = fixed count)
+			-- into Lua's CALL instruction representation (where 0 = MULTIRET, >= 1 = fixed count).
+			local argumentCount    = numArgs + 1
+			local returnValueCount = (resultRegisters and resultRegisters + 1) or 2
+			local resultCount      = (register + returnValueCount) - 2
+		
+			-- OP_CALL [A, B, C]    R(A), ... ,R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1))
+			self:emitInstruction("CALL", register, argumentCount, returnValueCount)
+			self:freeRegisters(argumentRegisterCount)
+			self:allocateRegisters(returnValueCount - 2) -- One register is already in 'register'
+		
+			return register, resultCount
+		end
+		
+		function CodeGenerator:FunctionExpression(node, register)
+			self:processFunction(node, register)
+			return register
+		end
+		
+		function CodeGenerator:IndexExpression(node, register)
+			local baseNode  = node.base
+			local indexNode = node.index
+		
+			local baseRegister  = self:processExpressionNode(baseNode, register)
+			local indexRegister = self:processConstantOrExpression(indexNode)
+		
+			-- OP_GETTABLE [A, B, C]    R(A) := R(B)[RK(C)]
+			self:emitInstruction("GETTABLE", baseRegister, baseRegister, indexRegister)
+			self:freeIfRegister(indexRegister)
+		
+			return baseRegister
+		end
+		
+		function CodeGenerator:VarargExpression(_, register, resultRegisters)
+			local varargCount = (resultRegisters or 1) + 1
+		
+			-- OP_VARARG [A, B]    R(A), R(A+1), ..., R(A+B-1) = vararg
+			self:emitInstruction("VARARG", register, varargCount)
+			self:allocateRegisters(varargCount - 2) -- One register is already in 'register'
+			return register
+		end
+		
+		--// Statement Handlers //--
+		function CodeGenerator:CallStatement(node)
+			self:FunctionCall(node.expression, self:allocateRegisters(1), 0)
+			-- We shouldn't have allocated registers from statements.
+			-- (Unless it's a statement that declares local variables.)
+			self:freeRegisters(1)
+		end
+		
+		function CodeGenerator:DoStatement(node)
+			self:processBlockNode(node.body)
+		end
+		
+		function CodeGenerator:BreakStatement(_)
+			if not self.breakJumpPCs then
+				error("CodeGenerator: no loop to break")
+			end
+		
+			table.insert(self.breakJumpPCs, self:emitJump())
+		end
+		
+		function CodeGenerator:LocalDeclarationStatement(node)
+			local variables    = node.variables
+			local initializers = node.initializers
+		
+			local variableBaseRegister = self.currentScope.allocatedRegisters - 1
+			self:processExpressionList(initializers, #variables)
+		
+			for index, variableName in ipairs(variables) do
+				local expressionRegister = variableBaseRegister + index
+				self:declareLocalVariable(variableName, expressionRegister)
+			end
+		end
+		
+		function CodeGenerator:LocalFunctionDeclaration(node)
+			local functionName = node.name
+			local body         = node.body
+		
+			local variableRegister = self:declareLocalVariable(functionName)
+			self:processFunction(body, variableRegister)
+		end
+		
+		function CodeGenerator:AssignmentStatement(node)
+			local lvalues     = node.lvalues
+			local expressions = node.expressions
+		
+			local variableBaseRegister = self.currentScope.allocatedRegisters
+			local lvalueRegisterCount  = self:processExpressionList(expressions, #lvalues)
+		
+			self:assignValuesToRegisters(lvalues, 1, variableBaseRegister)
+			self:freeRegisters(lvalueRegisterCount)
+		end
+		
+		function CodeGenerator:IfStatement(node)
+			local clauses    = node.clauses
+			local elseClause = node.elseClause
+		
+			local jumpToEndPCs = {}
+			local lastClause   = clauses[#clauses]
+		
+			-- Process all 'if' and 'elseif' clauses first.
+			for _, clause in ipairs(clauses) do
+				local condition = clause.condition
+				local body      = clause.body
+		
+				local conditionRegister = self:processExpressionNode(condition)
+		
+				-- OP_TEST [A, C]    if not (R(A) <=> C) then pc++
+				-- If the condition is false, jump to the next instruction.
+				-- (which is always a jump to the next clause)
+				self:emitInstruction("TEST", conditionRegister, 0, 0)
+				self:freeRegisters(1) -- Free conditionRegister
+		
+				-- This is the jump that occurs if the condition is false.
+				-- We will patch it later to jump to the next clause.
+				local conditionIsFalseJumpPC = self:emitJump()
+				self:processBlockNode(body)
+		
+				local isLastClause    = (clause == lastClause)
+				local shouldJumpToEnd = not isLastClause or elseClause
+				if shouldJumpToEnd then
+					local jumpToEndPC = self:emitJump()
+					table.insert(jumpToEndPCs, jumpToEndPC)
+				end
+		
+				-- Patch the condition false jump to here.
+				self:patchJumpToHere(conditionIsFalseJumpPC)
+			end
+		
+			-- Is there an 'else' clause to process?
+			-- NOTE: The previous clause's condition already jumps
+			-- to here, so we don't need to patch anything.
+			if elseClause then
+				self:processBlockNode(elseClause)
+			end
+		
+			-- Patch all jumps at the end of clauses to here.
+			self:patchJumpsToHere(jumpToEndPCs)
+		end
+		
+		function CodeGenerator:ForGenericStatement(node)
+			local iterators   = node.iterators
+			local expressions = node.expressions
+			local body        = node.body
+		
+			self:enterScope()
+			local baseRegister = self.currentScope.allocatedRegisters
+			self:processExpressionList(expressions, 3)
+			self:declareLocalVariables(iterators)
+		
+			local startJmpInstruction = self:emitJump()
+			local loopStartPC = #self.proto.code
+			self:breakable(function()
+				self:processBlockNode(body)
+				self:patchJumpToHere(startJmpInstruction)
+		
+				-- OP_TFORLOOP [A, C]    R(A+3), ... ,R(A+2+C) := R(A)(R(A+1), R(A+2))
+				--                       if R(A+3) ~= nil then R(A+2)=R(A+3) else pc++
+				-- Skips next instruction if there are no more values.
+				self:emitInstruction("TFORLOOP", baseRegister, 0, #iterators)
+		
+				-- Emit jump back to the start of the loop if there are more values.
+				self:emitJumpBack(loopStartPC)
+			end)
+			self:leaveScope()
+		end
+		
+		function CodeGenerator:ForNumericStatement(node)
+			local varName   = node.variable
+			local startExpr = node.start
+			local limitExpr = node.limit
+			local stepExpr  = node.step
+			local body      = node.body
+		
+			self:enterScope()
+			local controlRegister = self:processExpressionNode(startExpr)
+			---@diagnostic disable-next-line: unused-local
+			local limitRegister = self:processExpressionNode(limitExpr)
+			local stepRegister  = self:allocateRegisters(1)
+		
+			-- Is there a step expression?
+			if stepExpr then
+				self:processExpressionNode(stepExpr, stepRegister)
+			else
+				-- OP_LOADK [A, Bx]    R(A) := Kst(Bx)
+				-- Default step is 1.
+				self:emitInstruction("LOADK", stepRegister, self:findOrCreateConstant(1))
+			end
+		
+			-- OP_FORPREP [A, sBx]    R(A)-=R(A+2) pc+=sBx
+			-- Prepare the internal loop variable by subtracting the step from the start.
+			local forPrepInstruction = self:emitInstruction("FORPREP", controlRegister, 0)
+			local loopStartPC = #self.proto.code
+		
+			-- Declare the loop variable in R(A + 3), not R(A).
+			-- We must use the copied "for" variable value instead of the actual one,
+			-- this is because Lua 5.1 semantics state that the loop variable is constant
+			-- within the loop body. If the user modifies it, the loop should not be affected.
+			--
+			-- Current register layout:
+			--   R(A)   - internal loop variable (control variable)
+			--   R(A+1) - limit
+			--   R(A+2) - step
+			--   R(A+3) - user loop variable "varName" (copied from R(A) every iteration)
+			self:declareLocalVariable(varName, self:allocateRegisters(1))
+			self:breakable(function()
+				self:processBlockNode(body)
+		
+				local loopEndPC = #self.proto.code
+				forPrepInstruction[3] = loopEndPC - loopStartPC
+		
+				-- OP_FORLOOP [A, sBx]   R(A)+=R(A+2)
+				--                       if R(A) <?= R(A+1) then { pc+=sBx R(A+3)=R(A) }
+				--                       (<?= is < or > depending on step sign)
+				--
+				-- Increment the internal loop variable R(A) by the step R(A+2), then jump
+				-- back to the start of the loop if the limit R(A+1) has not been reached,
+				-- copying the new value into the user loop variable R(A+3).
+				self:emitInstruction("FORLOOP", controlRegister, loopStartPC - loopEndPC - 1)
+			end)
+			self:leaveScope()
+		end
+		
+		function CodeGenerator:WhileStatement(node)
+			local condition = node.condition
+			local body      = node.body
+		
+			local startPC = #self.proto.code
+			local conditionRegister = self:processExpressionNode(condition)
+		
+			-- OP_TEST [A, C]    if not (R(A) <=> C) then pc++
+			self:emitInstruction("TEST", conditionRegister, 0, 0)
+			self:freeRegisters(1) -- The condition register is not needed anymore.
+		
+			local endJumpPC = self:emitJump()
+			self:breakable(function()
+				self:processBlockNode(body)
+				self:emitJumpBack(startPC)
+			end)
+			self:patchJumpToHere(endJumpPC)
+		end
+		
+		function CodeGenerator:RepeatStatement(node)
+			local body        = node.body
+			local condition   = node.condition
+			local loopStartPC = #self.proto.code
+		
+			-- NOTE: Repeat statements' body and condition are in the same scope.
+			self:enterScope()
+			self:breakable(function()
+				self:processStatementList(body.statements)
+				local conditionRegister = self:processExpressionNode(condition)
+		
+				if self.currentScope.needClose then
+					local parentScope = self.currentScope.parentScope
+					local allocatedRegisters = parentScope.allocatedRegisters
+		
+					-- OP_CLOSE [A]    close all variables in the stack up to (>=) R(A)
+					self:emitInstruction("CLOSE", allocatedRegisters, 0, 0)
+					self.currentScope.needClose = false
+				end
+		
+				-- OP_TEST [A, C]    if not (R(A) <=> C) then pc++
+				self:emitInstruction("TEST", conditionRegister, 0, 0)
+				self:emitJumpBack(loopStartPC)
+				self:freeRegisters(1) -- The condition register is not needed anymore.
+			end)
+			self:leaveScope()
+		end
+		
+		function CodeGenerator:ReturnStatement(node)
+			local expressions      = node.expressions
+			local resultRegister   = self.currentScope.allocatedRegisters
+			local lastExpression   = expressions[#expressions]
+			local isSingleFuncCall = self:isSingleFunctionCall(expressions)
+			local numResults, exprRegisterCount
+		
+			-- Optimization:
+			-- If it's a single function call, we can optimize it to a TAILCALL.
+			-- Tail calls are more efficient as they reuse the current function's stack frame.
+			if isSingleFuncCall then
+				self:FunctionCall(
+					lastExpression,
+					self:allocateRegisters(1), -- This register will be manually freed later.
+					-1
+				)
+		
+				local lastInstruction = self.proto.code[#self.proto.code]
+				if not lastInstruction or lastInstruction[1] ~= "CALL" then
+					error("CodeGenerator: Expected CALL instruction for tail call optimization.")
+				end
+		
+				-- OP_TAILCALL [A, B, C]    return R(A)(R(A+1), ... ,R(A+B-1))
+				lastInstruction[1] = "TAILCALL" -- Change CALL to TAILCALL
+				numResults         = -1         -- -1 = MULTIRET (all results)
+		
+				self:freeRegisters(1) -- Free the temp register used for the call.
+			else
+				exprRegisterCount, numResults = self:processExpressionList(expressions)
+				self:freeRegisters(exprRegisterCount)
+			end
+		
+			-- OP_RETURN [A, B]    return R(A), ... ,R(A+B-2)
+			self:emitInstruction("RETURN", resultRegister, numResults + 1, 0)
+		end
+		
+		--// Main Methods //--
+		
+		-- Process an expression AST node and return the register(s) holding its value.
+		-- If 'register' is nil a new register is allocated. 'resultRegisters' requests
+		-- multiple results (used for calls/vararg).
+		function CodeGenerator:processExpressionNode(node, register, resultRegisters)
+			if not node then error("Node not found.") end
+			register = register or self:allocateRegisters(1)
+		
+			local nodeKind = node.kind
+			local func     = self[nodeKind]
+			if not func then
+				error("CodeGenerator: Expression node kind not supported: " .. nodeKind)
+			end
+		
+			return func(self, node, register, resultRegisters)
+		end
+		
+		-- Process a statement AST node.
+		function CodeGenerator:processStatementNode(node)
+			if not node then error("Node not found.") end
+		
+			local nodeKind = node.kind
+			local func     = self[nodeKind]
+			if not func then
+				error("CodeGenerator: Statement node kind not supported: " .. nodeKind)
+			end
+		
+			return func(self, node)
+		end
+		
+		-- Processes a list of expressions, allocating registers and handling multi-return
+		-- cases. Returns the number of registers allocated and the result count (-1 for
+		-- multiret). If expectedRegisters is provided, it limits allocation and pads
+		-- with nil or discards excess results to match.
+		function CodeGenerator:processExpressionList(expressionList, expectedRegisters)
+			local count = #expressionList
+			if count == 0 and not expectedRegisters then return 0, 0 end
+		
+			local lastExpression = expressionList[count]
+			local isLastMultiret = self:isMultiReturnNode(lastExpression)
+		
+			-- Process "fixed" expressions (all except the last if it's multiret).
+			local fixedCount = (isLastMultiret and (count - 1)) or count
+		
+			for i = 1, fixedCount do
+				self:processExpressionNode(expressionList[i])
+		
+				-- If we are restricted to a certain amount of registers,
+				-- discard any extra registers after reaching the limit.
+				if expectedRegisters and i > expectedRegisters then
+					self:freeRegisters(1)
+				end
+			end
+		
+			-- Process the last expression (Special handling for multiret).
+			if isLastMultiret then
+				-- Calculate how many registers are remaining to be filled.
+				-- If `expectedRegisters` is nil, we pass -1 to capture all results.
+				local remaining = (expectedRegisters and (expectedRegisters - fixedCount)) or -1
+				self:processExpressionNode(lastExpression, self:allocateRegisters(1), remaining)
+		
+				-- Padding: If we have fewer expressions than expected, fill the rest with nils.
+			elseif expectedRegisters and expectedRegisters > count then
+				local needed   = expectedRegisters - count
+				local startReg = self.currentScope.allocatedRegisters
+				local endReg   = self:allocateRegisters(needed)
+		
+				-- OP_LOADNIL [A, B]    R(A) := ... := R(B) := nil
+				self:emitInstruction("LOADNIL", startReg, endReg, 0)
+			end
+		
+			local allocatedCount = expectedRegisters or count
+			local resultCount    = (isLastMultiret and -1) or allocatedCount
+		
+			return allocatedCount, resultCount
+		end
+		
+		function CodeGenerator:processStatementList(statementList)
+			for _, node in ipairs(statementList) do
+				self:processStatementNode(node)
+			end
+		end
+		
+		function CodeGenerator:processBlockNode(blockNode)
+			self:enterScope()
+			self:processStatementList(blockNode.statements)
+			self:leaveScope()
+		end
+		
+		-- Adds `proto` prototype to the `self.proto.protos` list and generates
+		-- the "CLOSURE" and upvalue capturing pseudo instructions.
+		function CodeGenerator:generateClosure(proto, closureRegister)
+			local parentProto = self.proto
+			local protoIndex  = #parentProto.protos + 1
+			table.insert(parentProto.protos, proto)
+		
+			-- OP_CLOSURE [A, Bx]    R(A) := closure(KPROTO[Bx], R(A), ... ,R(A+n))
+			-- Proto indices are zero-based.
+			self:emitInstruction("CLOSURE", closureRegister, protoIndex - 1, 0)
+		
+			-- After the "CLOSURE" instruction, we need to set up the upvalues
+			-- for the newly created function prototype. It is done by pseudo
+			-- instructions that follow the CLOSURE instruction.
+			for _, upvalueName in ipairs(proto.upvalues) do
+				local upvalueType = self:getUpvalueType(upvalueName)
+				if upvalueType == "Local" then
+					-- OP_MOVE [A, B]    R(A) := R(B)
+					self:emitInstruction("MOVE", 0, self:findVariableRegister(upvalueName))
+				elseif upvalueType == "Upvalue" then
+					-- OP_GETUPVAL [A, B]    R(A) := UpValue[B]
+					self:emitInstruction("GETUPVAL", 0, self:findOrCreateUpvalue(upvalueName))
+				else -- Assume it's a global.
+					error(
+						"CodeGenerator: The upvalue cannot be a global: "
+							.. upvalueName
+					)
+				end
+			end
+		end
+		
+		-- Processes the body of a function AST node, handling parameter declarations,
+		-- varargs, and generating the function's statements.
+		function CodeGenerator:processFunctionBody(node)
+			local previousBreakJumpPCs = self.breakJumpPCs
+			self.breakJumpPCs = nil
+			self:enterScope(true) -- Enter function scope.
+			for _, paramName in ipairs(node.parameters) do
+				self:declareLocalVariable(paramName)
+			end
+		
+			if node.isVararg then
+				-- Declare implicit "arg" variable to hold vararg values.
+				self:declareLocalVariable("arg")
+			end
+		
+			self:processStatementList(node.body.statements)
+		
+			-- Generate default return statement.
+			-- OP_RETURN [A, B]    return R(A), ... ,R(A+B-2)
+			self:emitInstruction("RETURN", 0, 1, 0)
+			self:leaveScope()
+			self.breakJumpPCs = previousBreakJumpPCs
+		end
+		
+		-- Processes a function AST node into a function prototype (proto), creating a child
+		-- prototype for the function's body and handling upvalue capture. If
+		-- closureRegister is provided, emits a CLOSURE instruction to create the
+		-- closure in that register. Returns the compiled child prototype.
+		function CodeGenerator:processFunction(functionNode, closureRegister)
+			local parentProto = self.proto
+			local childProto  = self:createPrototype({
+				isVararg  = functionNode.isVararg,
+				numParams = #functionNode.parameters,
+			})
+			self.proto = childProto
+			self:processFunctionBody(functionNode)
+			self.proto = parentProto
+		
+			-- Remove internal lookups, as they're no longer needed after codegen.
+			childProto.constantLookup = nil
+			childProto.upvalueLookup  = nil
+		
+			if closureRegister then
+				self:generateClosure(childProto, closureRegister)
+			end
+		
+			return childProto
+		end
+		
+		--// Entry Point //--
+		
+		function CodeGenerator:generate()
+			return self:processFunction({
+				body       = self.ast.body,
+				parameters = {},
+				isVararg   = true -- The main chunk always accepts varargs.
+				-- (used for command-line arguments)
+			})
+		end
+		
+		--[[
+		  ============================================================================
+		                                  (۶* ‘ヮ’)۶”
+		                            THE BYTECODE EMITTER!
+		  ============================================================================
+		
+		  The bytecode emitter is responsible for converting the given Lua Function Prototypes
+		  into Lua bytecode. The bytecode emitter will implement binary writing logic
+		  to write the bytecode to a file, which can then be executed by the
+		  Lua Virtual Machine (VM).
+		--]]
+		
+		-- Lua 5.1 Instruction Argument Modes. Instructions have different ways of
+		-- encoding their arguments (operands) within their 32 bits.
+		-- See "Lua 5.1 Instruction Formats" diagram below for details.
+		
+		-- Instruction argument modes
+		--  - iABC:  Uses three arguments: A (8 bits), B (9 bits), C (9 bits).
+		--           Common for operations involving 3 registers or 2 regs + 1 constant/literal.
+		--           [ Op(6) | A(8) | C(9) | B(9) ]
+		local MODE_iABC = 0
+		
+		--  - iABx:  Uses two arguments: A (8 bits), Bx (18 bits).
+		--           'Bx' combines B and C fields to hold a larger unsigned value,
+		--           often an index into the constant table or a prototype index.
+		--           [ Op(6) | A(8) |    Bx(18)    ]
+		local MODE_iABx = 1
+		
+		--  - iAsBx: Uses two arguments: A (8 bits), sBx (18 bits, signed).
+		--           'sBx' is like Bx but represents a signed offset, primarily used
+		--           for jump instructions. The offset is biased, to get the actual value,
+		--           you need to subtract 131072 (2^17) from the value.
+		--           This allows for jumps in both directions (forward and backward).
+		--           [ Op(6) | A(8) |   sBx(18)    ]
+		local MODE_iAsBx = 2
+		
+		-- Operand types
+		local OP_ARG_N = 0 -- Operand is not used
+		local OP_ARG_U = 1 -- Operand is used
+		local OP_ARG_R = 2 -- Operand is a register or a jump offset
+		local OP_ARG_K = 3 -- Operand is a constant or register/constant
+		
+		-- Function Header Flags
+		local VARARG_NONE     = 0
+		local VARARG_ISVARARG = 2 -- Flag indicating a function accepts '...'
+		
+		-- Note: There's another flag (VARARG_NEEDSARG) that indicates a function
+		--        uses the implicit `arg` variable (Lua 5.0+ feature), but since it's so
+		--        obscure and non-widely used, we won't implement it in TLC.
+		--
+		-- Read more:
+		--  What is VARARG_NEEDSARG - https://sourceforge.net/p/unluac/discussion/general/thread/5172ffe56a/
+		--  Lua 5.1 vararg system change - https://www.lua.org/manual/5.1/manual.html#7.1
+		
+		-- Constant type flags
+		local LUA_TBOOLEAN = 1
+		local LUA_TNUMBER  = 3
+		local LUA_TSTRING  = 4
+		
+		-- Operand sizes/positions
+		local POS_A   = 6
+		local POS_B   = 23
+		local POS_C   = 14
+		local POS_Bx  = 14
+		local POS_sBx = 14
+		
+		--* BytecodeEmitter *--
+		local BytecodeEmitter = {}
+		BytecodeEmitter.__index = BytecodeEmitter
+		
+		BytecodeEmitter.CONFIG = {
+			LUA_COMMON_HEADER = "\27Lua" -- Standard magic number identifying Lua bytecode
+			--[[version=]]             .. string.char(0x51) -- 0x51 signifies Lua version 5.1
+			--[[format=]]              .. string.char(0)    -- 0 = official format version
+			--[[endianness=]]          .. string.char(1)    -- 1 = little-endian, 0 = big-endian
+			--[[sizeof(int)=]]         .. string.char(4)    -- sizeof(int) = 4 bytes
+			--[[sizeof(size_t)=]]      .. string.char(8)    -- sizeof(size_t) = 8 bytes
+			--[[sizeof(Instruction)=]] .. string.char(4)    -- sizeof(Instruction) = 4 bytes
+			--[[sizeof(lua_Number)=]]  .. string.char(8)    -- sizeof(lua_Number) = 8 bytes
+			--[[integral flag=]]       .. string.char(0),   -- 0 = lua_Number is floating-point
+		
+			--// Lua 5.1 Instruction Set //--
+		
+			-- This table maps all Lua 5.1 opcodes to their respective argument modes,
+			-- it's used to determine how to encode the instruction arguments.
+			--
+			--  Format: [Opname] = {opcodeIndex, argumentMode, argBMode, argCMode}
+			--   - opcodeIndex: The index (0-based) of the opcode in the Lua 5.1 instruction set.
+			--   - argumentMode: The mode used to encode the instruction arguments.
+			--   - argBMode: The type of the B argument (OP_ARG_N, OP_ARG_U, OP_ARG_R, OP_ARG_K).
+			--   - argCMode: The type of the C argument (OP_ARG_N, OP_ARG_U, OP_ARG_R, OP_ARG_K).
+			--
+			-- Source: https://www.lua.org/source/5.1/lopcodes.c.html#luaP_opmodes
+			-- stylua: ignore
+			OPCODE_LOOKUP = {
+				-- Opname        Idx  Arg Mode    B Mode    C Mode
+				["MOVE"]      = {0,  MODE_iABC,  OP_ARG_R, OP_ARG_N},
+				["LOADK"]     = {1,  MODE_iABx,  OP_ARG_K, OP_ARG_N},
+				["LOADBOOL"]  = {2,  MODE_iABC,  OP_ARG_U, OP_ARG_U},
+				["LOADNIL"]   = {3,  MODE_iABC,  OP_ARG_R, OP_ARG_N},
+				["GETUPVAL"]  = {4,  MODE_iABC,  OP_ARG_U, OP_ARG_N},
+				["GETGLOBAL"] = {5,  MODE_iABx,  OP_ARG_K, OP_ARG_N},
+				["GETTABLE"]  = {6,  MODE_iABC,  OP_ARG_R, OP_ARG_K},
+				["SETGLOBAL"] = {7,  MODE_iABx,  OP_ARG_K, OP_ARG_N},
+				["SETUPVAL"]  = {8,  MODE_iABC,  OP_ARG_U, OP_ARG_N},
+				["SETTABLE"]  = {9,  MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["NEWTABLE"]  = {10, MODE_iABC,  OP_ARG_U, OP_ARG_U},
+				["SELF"]      = {11, MODE_iABC,  OP_ARG_R, OP_ARG_K},
+				["ADD"]       = {12, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["SUB"]       = {13, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["MUL"]       = {14, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["DIV"]       = {15, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["MOD"]       = {16, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["POW"]       = {17, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["UNM"]       = {18, MODE_iABC,  OP_ARG_R, OP_ARG_N},
+				["NOT"]       = {19, MODE_iABC,  OP_ARG_R, OP_ARG_N},
+				["LEN"]       = {20, MODE_iABC,  OP_ARG_R, OP_ARG_N},
+				["CONCAT"]    = {21, MODE_iABC,  OP_ARG_R, OP_ARG_R},
+				["JMP"]       = {22, MODE_iAsBx, OP_ARG_R, OP_ARG_N},
+				["EQ"]        = {23, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["LT"]        = {24, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["LE"]        = {25, MODE_iABC,  OP_ARG_K, OP_ARG_K},
+				["TEST"]      = {26, MODE_iABC,  OP_ARG_R, OP_ARG_U},
+				["TESTSET"]   = {27, MODE_iABC,  OP_ARG_R, OP_ARG_U},
+				["CALL"]      = {28, MODE_iABC,  OP_ARG_U, OP_ARG_U},
+				["TAILCALL"]  = {29, MODE_iABC,  OP_ARG_U, OP_ARG_U},
+				["RETURN"]    = {30, MODE_iABC,  OP_ARG_U, OP_ARG_N},
+				["FORLOOP"]   = {31, MODE_iAsBx, OP_ARG_R, OP_ARG_N},
+				["FORPREP"]   = {32, MODE_iAsBx, OP_ARG_R, OP_ARG_N},
+				["TFORLOOP"]  = {33, MODE_iABC,  OP_ARG_N, OP_ARG_U},
+				["SETLIST"]   = {34, MODE_iABC,  OP_ARG_U, OP_ARG_U},
+				["CLOSE"]     = {35, MODE_iABC,  OP_ARG_N, OP_ARG_N},
+				["CLOSURE"]   = {36, MODE_iABx,  OP_ARG_U, OP_ARG_N},
+				["VARARG"]    = {37, MODE_iABC,  OP_ARG_U, OP_ARG_N}
+			}
+		}
+		
+		--// BytecodeEmitter Constructor //--
+		function BytecodeEmitter.new(mainProto)
+			--// Type Checking //--
+			assert(
+				type(mainProto) == "table",
+				"Expected table for 'mainProto', got " .. type(mainProto)
+			)
+			assert(
+				mainProto.code and mainProto.constants,
+				"Expected a valid Lua function prototype for 'mainProto'"
+			)
+		
+			--// Initialization //--
+			return setmetatable({
+				mainProto = mainProto
+			}, BytecodeEmitter)
+		end
+		
+		--// Utility Functions //--
+		
+		-- A custom implementation of the `frexp` function, which decomposes
+		-- a floating-point number into its mantissa and exponent.
+		-- This is necessary because Lua 5.3+ does not have `math.frexp`,
+		function BytecodeEmitter:frexp(value)
+			-- Use built-in if available (Lua 5.1, Lua 5.2)
+			if math.frexp then return math.frexp(value) end
+			if value == 0 then return 0, 0 end
+		
+			-- The formula is:
+			--  mantissa = value / (2 ^ exponent)
+			--  exponent = floor(log2(abs(value))) + 1
+			local exponent = math.floor(math.log(math.abs(value)) / math.log(2)) + 1
+			local mantissa = value / (2 ^ exponent)
+			return mantissa, exponent
+		end
+		
+		-- A bitwise left shift, simulated with multiplication.
+		function BytecodeEmitter:lshift(value, shift)
+			return value * (2 ^ shift)
+		end
+		
+		-- RK (Register-or-Constant) encoding:
+		--
+		-- Lua packs a register index and a constant index into the same 9-bit operand.
+		-- Values 0..255 refer to registers (stack[operand]).
+		-- Values >= 256 refer to constants and map to proto.constants[operand - 256].
+		--
+		-- TLC represents constants as negative indices (e.g. -1 == first constant).
+		-- encodeRKValue converts TLC's negative constant index into the unsigned RK
+		-- form used in bytecode (for example: -1 -> 256).
+		function BytecodeEmitter:encodeRKValue(value)
+			if value < 0 then
+				return 255 - value -- Equivalent to: 255 + math.abs(value)
+			end
+			return value
+		end
+		
+		-- We use negative indices to represent constants internally, so we need to
+		-- convert them to unsigned indices for bytecode.
+		--
+		-- Example:
+		--   LOADK     5, -4 --> LOADK     5, 3
+		--   GETGLOBAL 2, -1 --> GETGLOBAL 2, 0
+		function BytecodeEmitter:toUnsigned(value)
+			if value < 0 then
+				return -value - 1 -- Equivalent to: math.abs(value) - 1
+			end
+			return value
+		end
+		
+		-- Converts `value` number into 1 byte (8 bits) representation.
+		function BytecodeEmitter:encodeUint8(value)
+			if value < 0 or value > 2^8 - 1 then
+				error(
+					"BytecodeEmitter: encodeUint8 value out of range of u8: "
+						.. tostring(value)
+				)
+			end
+		
+			return string.char(value % 256)
+		end
+		
+		-- Converts `value` number into 4 bytes (32 bits) little-endian representation.
+		function BytecodeEmitter:encodeUint32(value)
+			if value < 0 or value > 2^32 - 1 then
+				error(
+					"BytecodeEmitter: encodeUint32 value out of range of u32: "
+						.. tostring(value)
+				)
+			end
+		
+			local b1 = value % 256 value = math.floor(value / 256)
+			local b2 = value % 256 value = math.floor(value / 256)
+			local b3 = value % 256 value = math.floor(value / 256)
+			local b4 = value % 256
+		
+			return string.char(b1, b2, b3, b4)
+		end
+		
+		-- Converts `value` number into 8 bytes (64 bits) little-endian representation.
+		function BytecodeEmitter:encodeUint64(value)
+			if value < 0 or value > 2^64 - 1 then
+				error(
+					"BytecodeEmitter: encodeUint64 value out of range of u64: "
+						.. tostring(value)
+				)
+			end
+		
+			local lowWord  = value % 2^32
+			local highWord = math.floor(value / 2^32)
+		
+			return self:encodeUint32(lowWord) .. self:encodeUint32(highWord)
+		end
+		
+		-- Encodes a Lua number (float64) into its IEEE 754 binary representation (8 bytes).
+		-- Reference: https://en.wikipedia.org/wiki/Double-precision_floating-point_format.
+		function BytecodeEmitter:encodeFloat64(value)
+			-- Handle the simple edge cases first.
+			if value == 0 then
+				-- Zero is just 8 zero-bytes. Easy!
+				return self:encodeUint64(0)
+			elseif value == 1/0 then -- Check for infinity
+				-- The special representation for infinity is:
+				--  exponent = all bits set to 1 (2047)
+				--  faction  = 0
+				local lowWord = 0
+				local highWord = self:lshift(2047, 20) -- 0x7FF00000
+				return self:encodeUint32(highWord) .. self:encodeUint32(lowWord)
+			elseif value ~= value then -- Check for NaN (Not a Number)
+				-- The special representation for NaN is:
+				--  exponent = all bits set to 1 (2047)
+				--  faction  = non-zero value for quiet NaN (we'll use 1)
+				--
+				-- Fun fact: IEEE 754 defines two types of NaN:
+				--   - Quiet NaN (qNaN): The most significant bit of the fraction is set to 1.
+				--   - Signaling NaN (sNaN): The most significant bit of the fraction is set to 0.
+				--
+				-- Here, we are using a quiet NaN representation.
+				local lowWord = 1
+				local highWord = self:lshift(2047, 20) -- 0x7FF00000
+				return self:encodeUint32(highWord) .. self:encodeUint32(lowWord)
+			end
+		
+			-- Deconstruct the number into its core parts.
+			local sign = (value < 0 and 1) or 0
+			local mantissa, exponent = self:frexp(math.abs(value))
+		
+			-- The exponent needs a "bias". frexp gives us an exponent 'e' where the
+			-- number is `mantissa * 2^e`. IEEE 754 format needs a biased exponent.
+			-- The math works out that we need to add 1022 to the frexp exponent.
+			local biasedExponent = exponent + 1022
+		
+			-- The mantissa from frexp is between 0.5 and 1.0. We need to scale it
+			-- to fit into the 52 bits of the fraction field. We also discard the
+			-- implicit leading '1' bit of the fraction, hence the `-1`.
+			--  `(mantissa * 2 - 1)` gets the fractional part, and we scale it by 2^52.
+			local integerMantissa = (mantissa * 2 - 1) * (2^52)
+		
+			-- The lower 32 bits are simply the lower 32 bits of our 52-bit mantissa.
+			-- We can get this with a modulo operation.
+			local lowWord = integerMantissa % 2^32
+		
+			-- The higher 32 bits are a combination of the sign, exponent, and the
+			-- remaining 20 bits of the mantissa.
+			local mantissaHigh = math.floor(integerMantissa / 2^32)
+		
+			-- Now we use lshift to put everything in its place for the high word:
+			--  - The sign bit is the 31st bit.
+			--  - The exponent's 11 bits start at the 20th bit.
+			--  - The remaining 20 bits of the mantissa fill the rest.
+			local highWord = self:lshift(sign, 31)
+				+ self:lshift(biasedExponent, 20)
+				+ mantissaHigh
+		
+			-- Convert the two 32-bit chunks to bytes.
+			-- Since we're little-endian, the "low" part comes first.
+			return self:encodeUint32(lowWord) .. self:encodeUint32(highWord)
+		end
+		
+		--// Bytecode Generation //--
+		function BytecodeEmitter:encodeString(value)
+			value = value .. "\0"
+			local size = self:encodeUint64(#value)
+			return size .. value
+		end
+		
+		-- Encodes a Lua constant into its bytecode representation.
+		function BytecodeEmitter:encodeConstant(constantValue)
+			local constType = type(constantValue)
+		
+			if constType == "boolean" then
+				local boolValue = constantValue and 1 or 0
+				return self:encodeUint8(LUA_TBOOLEAN) .. self:encodeUint8(boolValue)
+			elseif constType == "number" then
+				return self:encodeUint8(LUA_TNUMBER) .. self:encodeFloat64(constantValue)
+			elseif constType == "string" then
+				return self:encodeUint8(LUA_TSTRING) .. self:encodeString(constantValue)
+			end
+		
+			error("BytecodeEmitter: Unsupported constant type '" .. constType .. "'")
+		end
+		
+		-- Helper to validate operand ranges.
+		-- Prevents silent overflows that would corrupt the bytecode.
+		function BytecodeEmitter:validateOperand(value, min, max, operandName, opname)
+			if value < min or value > max then
+				error(
+					string.format(
+						"BytecodeEmitter: Operand %s overflow in instruction '%s'."
+							.. " Got %d. Valid range is %d to %d.",
+						operandName, opname, value, min, max
+					)
+				)
+			end
+		end
+		
+		-- Encodes an instruction in iABC mode.
+		-- Format: [ Opcode(6) | A(8) | C(9) | B(9) ]
+		--
+		-- NOTE: In the binary layout, C (bits 14-22) comes BEFORE B (bits 23-31).
+		function BytecodeEmitter:encodeABCInstruction(opcode, a, instruction, argBMode, argCMode)
+			local opname = instruction[1]
+			local b, c = instruction[3], instruction[4]
+		
+			-- Validate operands B and C (9 bits signed: -256 to 255 during RK encoding steps).
+			self:validateOperand(b, -2^8, 2^8 - 1, "B", opname)
+			self:validateOperand(c, -2^8, 2^8 - 1, "C", opname)
+		
+			-- Handle RK() operands (register or constant).
+			-- If the argument mode is OpArgK, we encode constants specially.
+			if argBMode == OP_ARG_K then b = self:encodeRKValue(b) end
+			if argCMode == OP_ARG_K then c = self:encodeRKValue(c) end
+		
+			-- Shift components to their positions.
+			local shiftedA = self:lshift(a, POS_A)
+			local shiftedB = self:lshift(b, POS_B)
+			local shiftedC = self:lshift(c, POS_C)
+		
+			-- Combine all parts into a single 32-bit integer.
+			return self:encodeUint32(opcode + shiftedA + shiftedB + shiftedC)
+		end
+		
+		-- Encodes an instruction in iABx mode.
+		-- Format: [ Opcode(6) | A(8) | Bx(18) ]
+		--
+		-- Used for loading constants (LOADK) and global lookups (GETGLOBAL/SETGLOBAL).
+		function BytecodeEmitter:encodeABxInstruction(opcode, a, instruction)
+			-- Bx is an unsigned 18-bit integer.
+			-- Since we use negative indices for constants internally,
+			-- we need to convert it to unsigned form.
+			local opname = instruction[1]
+			local bx = self:toUnsigned(instruction[3])
+		
+			-- Validate operand Bx (18 bits unsigned: 0 to 262143).
+			self:validateOperand(bx, 0, 2^18 - 1, "Bx", opname)
+		
+			-- Shift components to their positions.
+			local shiftedA  = self:lshift(a, POS_A)
+			local shiftedBx = self:lshift(bx, POS_Bx)
+		
+			-- Combine all parts into a single 32-bit integer.
+			return self:encodeUint32(opcode + shiftedA + shiftedBx)
+		end
+		
+		-- Encodes an instruction in iAsBx mode.
+		-- Format: [ Opcode(6) | A(8) | sBx(18) ]
+		--
+		-- Used for jumps (JMP, FORLOOP).
+		-- sBx is a signed 18-bit integer represented in "Excess-K" encoding.
+		function BytecodeEmitter:encodeAsBxInstruction(opcode, a, instruction)
+			local opname = instruction[1]
+			local b = instruction[3]
+		
+			-- Validate operand sBx (18 bits signed: -131072 to 131071).
+			self:validateOperand(b, -2^17, 2^17 - 1, "sBx", opname)
+		
+			-- sBx Encoding (Bias):
+			-- We add a bias of 131071 (2^17 - 1) to the value.
+			-- This maps the range [-131071, 131072] to the unsigned range [0, 262143].
+			-- This allows the processor to treat the field as unsigned while strictly
+			-- representing signed jump offsets.
+			local bias = 2^17 - 1
+			local sbx  = b + bias
+		
+			-- Shift components to their positions.
+			local shiftedA  = self:lshift(a, POS_A)
+			local shiftedBx = self:lshift(sbx, POS_sBx)
+		
+			-- Combine all parts into a single 32-bit integer.
+			return self:encodeUint32(opcode + shiftedA + shiftedBx)
+		end
+		
+		-- Serializes a single instruction into its 4-byte representation.
+		-- We build the 32-bit number by shifting each component to its designated
+		-- position and adding them together.
+		--
+		-- Field     | Size (bits) | Shift Left By | Position (from bit 0)
+		-- ----------|-------------|---------------|-----------------------
+		-- Opcode    | 6           | 0             | 0-5
+		-- A         | 8           | 6             | 6-13
+		-- C         | 9           | 14            | 14-22 (for iABC)
+		-- Bx/sBx    | 18          | 14            | 14-31 (for iABx/iAsBx)
+		-- B         | 9           | 23            | 23-31 (for iABC)
+		function BytecodeEmitter:encodeInstruction(instruction)
+			-- First, let's look up the opcode's number and its argument format.
+			local opname     = tostring(instruction[1] or "<unknown>")
+			local opcodeData = self.CONFIG.OPCODE_LOOKUP[opname]
+		
+			if not opcodeData then
+				error("BytecodeEmitter: Unsupported instruction '" .. opname .. "'")
+			end
+		
+			-- Unpack opcode data.
+			local opcode, opmode     = opcodeData[1], opcodeData[2]
+			local argBMode, argCMode = opcodeData[3], opcodeData[4]
+			local a = instruction[2]
+		
+			-- Validate operand A (8 bits unsigned: 0 to 255)
+			self:validateOperand(a, 0, 2^8 - 1, "A", opname)
+		
+			-- Dispatch to the appropriate encoder based on the instruction mode.
+			if opmode == MODE_iABC then
+				return self:encodeABCInstruction(opcode, a, instruction, argBMode, argCMode)
+			elseif opmode == MODE_iABx then
+				return self:encodeABxInstruction(opcode, a, instruction)
+			elseif opmode == MODE_iAsBx then
+				return self:encodeAsBxInstruction(opcode, a, instruction)
+			end
+		
+			error(
+				string.format(
+					"BytecodeEmitter: Unsupported instruction format for '%s'.",
+					opname
+				)
+			)
+		end
+		
+		-- Serializes the code section of a function prototype.
+		function BytecodeEmitter:encodeCodeSection(proto)
+			-- Put the 32-bit count of instructions first.
+			local codeSection = { self:encodeUint32(#proto.code) }
+			for index, instruction in ipairs(proto.code) do
+				codeSection[index + 1] = self:encodeInstruction(instruction)
+			end
+		
+			return table.concat(codeSection)
+		end
+		
+		-- Serializes the constant section of a function prototype.
+		function BytecodeEmitter:encodeConstantSection(proto)
+			-- Put the 32-bit count of constants first.
+			local constantSection = { self:encodeUint32(#proto.constants) }
+			for index, constant in ipairs(proto.constants) do
+				constantSection[index + 1] = self:encodeConstant(constant)
+			end
+		
+			return table.concat(constantSection)
+		end
+		
+		-- Serializes the nested prototype section of a function prototype.
+		function BytecodeEmitter:encodePrototypeSection(proto)
+			-- Put the 32-bit count of nested prototypes first.
+			local protoSection = { self:encodeUint32(#proto.protos) }
+			for index, childPrototype in ipairs(proto.protos) do
+				protoSection[index + 1] = self:encodePrototype(childPrototype)
+			end
+		
+			return table.concat(protoSection)
+		end
+		
+		-- Serializes a complete Lua Function Prototype chunk.
+		function BytecodeEmitter:encodePrototype(proto)
+			-- Basic validation of the function prototype.
+			if not proto.code or not proto.constants then
+				error("BytecodeEmitter: Invalid function prototype")
+			end
+		
+			-- Note: TLC doesn't implement debug info as that would require tracking
+			--       line numbers, local variables, and upvalue names, etc. which will
+			--       add a lot of unnecessary complexity to the compiler.
+			--
+			-- Optimization: We can build the entire prototype chunk in one go
+			--               using table.concat to minimize string allocations.
+			return table.concat({
+				-- Prototype Header --
+				self:encodeString("@tlc"),             -- Source name.
+				self:encodeUint32(0),                  -- Line defined (debug).
+				self:encodeUint32(0),                  -- Last line defined (debug).
+				self:encodeUint8(#proto.upvalues),     -- nups (Number of upvalues).
+				self:encodeUint8(proto.numParams),     -- Number of parameters.
+				self:encodeUint8((proto.isVararg and VARARG_ISVARARG) or VARARG_NONE),
+				self:encodeUint8(proto.maxStackSize),  -- Max stack size.
+		
+				-- Sections --
+				self:encodeCodeSection(proto),      -- Code section.
+				self:encodeConstantSection(proto),  -- Constant section.
+				self:encodePrototypeSection(proto), -- Nested prototype section.
+		
+				-- Debug info (not implemented) --
+				self:encodeUint32(0), -- Line info (debug).
+				self:encodeUint32(0), -- Local variables (debug).
+				self:encodeUint32(0)  -- Upvalues (debug).
+			})
+		end
+		
+		--// Main //--
+		function BytecodeEmitter:emit()
+			return self.CONFIG.LUA_COMMON_HEADER .. self:encodePrototype(self.mainProto)
+		end
+		
+		--[[
+		    ============================================================================
+		                                      (/^▽^)/
+		                                THE VIRTUAL MACHINE!
+		    ============================================================================
+		
+		    Welcome to the final stage of the pipeline!
+		
+		    The Virtual Machine (VM) is the engine that actually "runs" your code. While
+		    the Compiler translates source text into a structure the computer can understand
+		    (the Function Prototype), the VM is the component that interprets that structure
+		    and performs the actions it describes.
+		
+		    This VM implements Lua 5.1's register-based architecture. Unlike stack-based
+		    VMs (like the JVM) where operands are pushed and popped, Lua instructions
+		    refer directly to specific slots (registers) in a stack array. This approach
+		    maps efficiently to modern CPU architectures and reduces the total instruction
+		    count.
+		
+		    Our VM executes a "Prototype" (proto) object generated by the Code Generator,
+		    which holds the bytecode instructions, constants, and upvalues. To keep the focus
+		    on logic rather than file formats, we execute the Lua table representation
+		    of the prototype directly instead of parsing binary `.luac` files. This
+		    avoids complex bitwise manipulation and lets us focus entirely on how the
+		    instructions work.
+		
+		    Implementation Note:
+		    This is not a full Lua VM implementation! It's a simplified VM designed
+		    specifically to be small, easy to understand, and capable of executing
+		    TLC-generated bytecode.
+		
+		    For instance, while a standard Lua VM (see lvm.c or lfunc.c) allocates
+		    complex LClosure structures to manage prototypes and upvalue lists, TLC
+		    simplifies this by wrapping closures in native Lua functions.
+		
+		    We further reduce complexity by omitting garbage collection, debug hooks,
+		    metamethods, and coroutines, relying instead on the host Lua environment
+		    for these runtime services.
+		
+		    Why this design? By delegating these responsibilities to the host, we
+		    dramatically simplify the implementation, avoiding the need for CallInfo
+		    frames, stack bases, and complex upvalue management with open and closed
+		    upvalue lists.
+		
+		    The trade-off is that we lose some fidelity compared to a real Lua VM.
+		    We don't have proper function identity tracking, and debug hooks are
+		    harder to implement. However, we gain a working VM in roughly 500 lines
+		    of code.
+		
+		    If you're looking for a more complete Lua VM implementation in Lua, consider
+		    checking out Rerumu's FiOne Lua VM: https://github.com/Rerumu/FiOne
+		--]]
+		
+		--* Constants *--
+		local unpack = (unpack or table.unpack) -- Lua 5.1/5.2+ compatibility.
+		local USE_CURRENT_TOP = 0
+		
+		-- Number of list items to accumulate before a SETLIST instruction.
+		local FIELDS_PER_FLUSH = 50
+		
+		--* VirtualMachine *--
+		local VirtualMachine = {}
+		VirtualMachine.__index = VirtualMachine -- Set up for method calls via `.`.
+		
+		--// VirtualMachine Constructor //--
+		function VirtualMachine.new(proto)
+			--// Initialization //--
+			return setmetatable({
+				mainProto = proto, -- Should only be used in `:execute()`.
+				closure   = nil    -- Current closure we're working with.
+			}, VirtualMachine)
+		end
+		
+		--// Auxiliary functions //--
+		
+		-- Packs varargs into a table and returns the amount of
+		-- arguments along with the table.
+		local function pack(...)
+			return select("#", ...), { ... }
+		end
+		
+		function VirtualMachine:pushClosure(closure)
+			self.closure = {
+				proto    = closure.proto,
+				upvalues = closure.upvalues or {},
+				env      = closure.env      or _G
+			}
+		end
+		
+		--// Execution //--
+		function VirtualMachine:executeClosure(...)
+			-- Optimization: localize fields.
+			local closure   = self.closure
+			local stack     = {}
+			local env       = closure.env
+			local proto     = closure.proto
+			local upvalues  = closure.upvalues
+			local code      = proto.code
+			local constants = proto.constants
+			local numparams = proto.numParams
+			local isVararg  = proto.isVararg
+		
+			local maxStackSize = proto.maxStackSize
+			local top = maxStackSize
+			local upvalueStack = {}
+			local maxUpvalue = -1
+		
+			-- Gets a value from either the stack or constants table.
+			-- NOTE: Constant indices are represented as negative numbers
+			-- in our implementation, so in order to get the correct constant,
+			-- we negate the index when accessing the constants table.
+			local function rk(index)
+				if index < 0 then
+					return constants[-index]
+				end
+				return stack[index]
+			end
+		
+			-- Initialize parameters.
+			local vararg, varargLen
+			local params = { ... }
+		
+			for paramIdx = 1, numparams do
+				stack[paramIdx - 1] = params[paramIdx]
+			end
+			if isVararg then
+				varargLen, vararg = pack(select(numparams + 1, ...))
+				stack[numparams] = vararg -- Implicit "arg" argument.
+			end
+		
+			-- "PC" stands for Program Counter, it tracks which instruction we're on.
+			-- Sometimes we need to modify it directly (for jumps), so we can't use
+			-- a simple for-loop to iterate over instructions linearly.
+			local pc = 1
+			while true do
+				local instruction = code[pc]
+				if not instruction then
+					break
+				end
+		
+				local opname  = instruction[1]
+				local a, b, c = instruction[2], instruction[3], instruction[4]
+		
+				-- NOTE:
+				--  Many Lua VM implementations written in Lua use binary search on sorted
+				--  opcode tables for faster dispatch, reducing lookup time from O(n) to
+				--  O(log n). For clarity and maintainability, TLC uses a simple linear
+				--  if-else chain instead. This makes the code easier to read and modify.
+		
+				-- OP_MOVE [A, B]    R(A) := R(B)
+				-- Copy a value between registers.
+				if opname == "MOVE" then
+					stack[a] = stack[b]
+		
+					-- OP_LOADK [A, Bx]    R(A) = Kst(Bx)
+					-- Load a constant into a register.
+				elseif opname == "LOADK" then
+					stack[a] = constants[-b]
+		
+					-- OP_LOADBOOL [A, B, C]    R(A) := (Bool)B; if (C) pc++
+					-- Load a boolean into a register.
+				elseif opname == "LOADBOOL" then
+					stack[a] = (b ~= 0)
+					if c ~= 0 then
+						pc = pc + 1
+					end
+		
+					-- OP_LOADNIL [A, B]    R(A) := ... := R(B) := nil
+					-- Load nil values into a range of registers.
+				elseif opname == "LOADNIL" then
+					local reg = b
+					repeat
+						stack[reg] = nil
+						reg = reg - 1
+					until reg < a
+		
+					-- OP_GETUPVAL [A, B]    R(A) := UpValue[B]
+					-- Read an upvalue into a register.
+				elseif opname == "GETUPVAL" then
+					local upvalue = upvalues[b + 1]
+					stack[a] = upvalue.stack[upvalue.index]
+		
+					-- OP_GETGLOBAL [A, Bx]    R(A) := Gbl[Kst(Bx)]
+					-- Read a global variable into a register.
+				elseif opname == "GETGLOBAL" then
+					stack[a] = env[constants[-b]]
+		
+					-- OP_GETTABLE [A, B, C]    R(A) := R(B)[RK(C)]
+					-- Read a table element into a register.
+				elseif opname == "GETTABLE" then
+					stack[a] = stack[b][rk(c)]
+		
+					-- OP_SETGLOBAL [A, Bx]    Gbl[Kst(Bx)] := R(A)
+					-- Write a register value into a global variable.
+				elseif opname == "SETGLOBAL" then
+					env[rk(b)] = stack[a]
+		
+					-- OP_SETUPVAL [A, B]    UpValue[B] := R(A)
+					-- Write a register value into an upvalue.
+				elseif opname == "SETUPVAL" then
+					local upvalue = upvalues[b + 1]
+					upvalue.stack[upvalue.index] = stack[a]
+		
+					-- OP_SETTABLE [A, B, C]    R(A)[RK(B)] := RK(C)
+					-- Write a register value into a table element.
+				elseif opname == "SETTABLE" then
+					stack[a][rk(b)] = rk(c)
+		
+					-- OP_NEWTABLE [A, B, C]    R(A) := {} (size = B,C)
+					-- Create a new table and store it in a register.
+					-- B = array part size hint, C = hash part size hint (ignored here).
+				elseif opname == "NEWTABLE" then
+					stack[a] = {}
+		
+					-- OP_SELF [A, B, C]    R(A+1) := R(B); R(A) := R(B)[RK(C)]
+					-- Prepare an object method for calling.
+				elseif opname == "SELF" then
+					local rb = stack[b]
+					stack[a + 1] = rb
+					stack[a] = rb[rk(c)]
+		
+					-- OP_ADD [A, B, C]    R(A) := RK(B) + RK(C)
+					-- Add two values and store the result in a register.
+				elseif opname == "ADD" then
+					stack[a] = rk(b) + rk(c)
+		
+					-- OP_SUB [A, B, C]    R(A) := RK(B) - RK(C)
+					-- Subtract two values and store the result in a register.
+				elseif opname == "SUB" then
+					stack[a] = rk(b) - rk(c)
+		
+					-- OP_MUL [A, B, C]    R(A) := RK(B) * RK(C)
+					-- Multiply two values and store the result in a register.
+				elseif opname == "MUL" then
+					stack[a] = rk(b) * rk(c)
+		
+					-- OP_DIV [A, B, C]    R(A) := RK(B) / RK(C)
+					-- Divide two values and store the result in a register.
+				elseif opname == "DIV" then
+					stack[a] = rk(b) / rk(c)
+		
+					-- OP_MOD [A, B, C]    R(A) := RK(B) % RK(C)
+					-- Calculate the modulus of two values and store the result in a register.
+				elseif opname == "MOD" then
+					stack[a] = rk(b) % rk(c)
+		
+					-- OP_POW [A, B, C]    R(A) := RK(B) ^ RK(C)
+					-- Raise a value to the power of another and store the result in a register.
+				elseif opname == "POW" then
+					stack[a] = rk(b) ^ rk(c)
+		
+					-- OP_UNM [A, B]    R(A) := -R(B)
+					-- Negate a value and store the result in a register.
+				elseif opname == "UNM" then
+					stack[a] = -stack[b]
+		
+					-- OP_NOT [A, B]    R(A) := not R(B)
+					-- Logical NOT of a value and store the result in a register.
+				elseif opname == "NOT" then
+					stack[a] = not stack[b]
+		
+					-- OP_LEN [A, B]    R(A) := length of R(B)
+					-- Get the length of a value and store it in a register.
+				elseif opname == "LEN" then
+					stack[a] = #stack[b]
+		
+					-- OP_CONCAT [A, B, C]    R(A) := R(B).. ... ..R(C)
+					-- Concatenate a range of registers and store the result in a register.
+				elseif opname == "CONCAT" then
+					for reg = c - 1, b, -1 do
+						-- NOTE: We cannot use table.concat as it does not call metamethods
+						stack[reg] = stack[reg] .. stack[reg + 1]
+					end
+					stack[a] = stack[b]
+		
+					-- OP_JMP [A, sBx]    pc+=sBx
+					-- Jump to a new instruction offset.
+				elseif opname == "JMP" then
+					pc = pc + b
+		
+					-- OP_EQ [A, B, C]    if ((RK(B) == RK(C)) ~= A) then pc++
+					-- Conditional jump based on equality.
+				elseif opname == "EQ" then
+					local isEqual = rk(b) == rk(c)
+					local bool = (a ~= 0)
+					if isEqual ~= bool then
+						pc = pc + 1
+					end
+		
+					-- OP_LT [A, B, C]    if ((RK(B) < RK(C)) ~= A) then pc++
+					-- Conditional jump based on less-than comparison.
+				elseif opname == "LT" then
+					local isLessThan = rk(b) < rk(c)
+					local bool = (a ~= 0)
+					if isLessThan ~= bool then
+						pc = pc + 1
+					end
+		
+					-- OP_LE [A, B, C]    if ((RK(B) <= RK(C)) ~= A) then pc++
+					-- Conditional jump based on less-than-or-equal comparison.
+				elseif opname == "LE" then
+					local isLessThanOrEqual = rk(b) <= rk(c)
+					local bool = (a ~= 0)
+					if isLessThanOrEqual ~= bool then
+						pc = pc + 1
+					end
+		
+					-- OP_TEST [A, C]    if not (R(A) <=> C) then pc++
+					-- Boolean test, with a conditional jump.
+					-- NOTE: After this instruction, the next instruction will always be a jump.
+				elseif opname == "TEST" then
+					local bool = (c ~= 0)
+					if (not stack[a]) == bool then
+						pc = pc + 1
+					else
+						-- Optimization:
+						--  Since we know that the next instruction is guaranteed to be a jump,
+						--  we can implement it here to avoid an extra iteration of the loop.
+						--
+						-- TODO: Should we verify that the next instruction is indeed a JMP?
+						local nextInstruction = code[pc + 1]
+						local jumpDistance = nextInstruction[3]
+						pc = pc + 1 + jumpDistance
+					end
+		
+					-- OP_TESTSET [A, B, C]    if (R(B) <=> C) then R(A) := R(B) else pc++
+					-- Boolean test, with conditional assignment and jump.
+					-- NOTE: After this instruction, the next instruction will always be a jump.
+				elseif opname == "TESTSET" then
+					local bool = (c ~= 0)
+					if (not stack[b]) == bool then
+						stack[a] = stack[b]
+		
+						-- Optimization:
+						--  Since we know that the next instruction is guaranteed to be a jump,
+						--  we can implement it here to avoid an extra iteration of the loop.
+						--
+						-- TODO: Should we verify that the next instruction is indeed a JMP?
+						local nextInstruction = code[pc + 1]
+						local jumpDistance = nextInstruction[3]
+						pc = pc + 1 + jumpDistance
+					else
+						pc = pc + 1
+					end
+		
+					-- OP_CALL [A, B, C]    R(A), ... ,R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1))
+					-- Call a closure (function) with arguments and handle returns.
+				elseif opname == "CALL" then
+					local func = stack[a]
+					if b ~= USE_CURRENT_TOP then
+						top = a + b
+					end
+		
+					local nReturns, returns = pack(func(unpack(stack, a + 1, top - 1)))
+		
+					if c ~= USE_CURRENT_TOP then
+						nReturns = c - 1
+					else
+						-- Multi-return: push all results onto the stack.
+						top = a + nReturns
+					end
+					for index = 1, nReturns do
+						stack[a + index - 1] = returns[index]
+					end
+		
+					-- OP_TAILCALL [A, B, C]    return R(A)(R(A+1), ... ,R(A+B-1))
+					-- Perform a tail call to a closure (function).
+				elseif opname == "TAILCALL" then
+					local func = stack[a]
+					if b ~= USE_CURRENT_TOP then
+						top = a + b
+					end
+		
+					-- Optimization:
+					--   Since TAILCALL always comes before RETURN,
+					--   we can just return the function call results directly.
+					return func(unpack(stack, a + 1, top - 1))
+		
+					-- OP_RETURN [A, B]    return R(A), ... ,R(A+B-2)
+					-- Return values from function call.
+				elseif opname == "RETURN" then
+					if b ~= USE_CURRENT_TOP then
+						top = a + b - 1
+					end
+		
+					return unpack(stack, a, top - 1)
+		
+					-- OP_FORLOOP [A, sBx]   R(A)+=R(A+2)
+					--                       if R(A) <?= R(A+1) then { pc+=sBx R(A+3)=R(A) }
+					-- Iterate a numeric for loop.
+				elseif opname == "FORLOOP" then
+					local step  = stack[a + 2]
+					local idx   = stack[a] + step
+					local limit = stack[a + 1]
+		
+					local shouldContinue = false
+					if step >= 0 then
+						shouldContinue = (idx <= limit)
+					else
+						shouldContinue = (idx >= limit)
+					end
+		
+					if shouldContinue then
+						pc = pc + b
+						stack[a] = idx
+						stack[a + 3] = idx
+					end
+		
+					-- OP_FORPREP [A, sBx]    R(A)-=R(A+2) pc+=sBx
+					-- Initialize a numeric for loop.
+				elseif opname == "FORPREP" then
+					local init   = stack[a]
+					local plimit = stack[a + 1]
+					local pstep  = stack[a + 2]
+					if not tonumber(init) then
+						error("Initial value must be a number")
+					elseif not tonumber(plimit) then
+						error("Limit must be a number")
+					elseif not tonumber(pstep) then
+						error("Step must be a number")
+					end
+		
+					stack[a] = init - pstep
+					pc = pc + b
+		
+					-- OP_TFORLOOP [A, C]    R(A+3), ... ,R(A+2+C) := R(A)(R(A+1), R(A+2))
+					--                       if R(A+3) ~= nil then R(A+2)=R(A+3) else pc++
+					-- Iterate a generic for loop.
+					-- NOTE: After this instruction, the next instruction will always be a jump.
+				elseif opname == "TFORLOOP" then
+					local cb = a + 3
+		
+					-- Copy function and arguments for the call.
+					stack[cb + 2] = stack[a + 2] -- The iterator function.
+					stack[cb + 1] = stack[a + 1] -- The state.
+					stack[cb]     = stack[a]     -- The control variable.
+		
+					-- Call the iterator function.
+					local iteratorFunc = stack[cb]
+					local returns = { iteratorFunc(stack[cb + 1], stack[cb + 2]) }
+		
+					-- Place results on the stack, starting at cb.
+					-- The number of results to keep is specified by `c`.
+					for i = 1, c do
+						stack[cb + i - 1] = returns[i]
+					end
+		
+					-- Check if the new control variable is nil.
+					if stack[cb] ~= nil then
+						-- If not nil, copy it to R(A+2) (the control variable).
+						stack[cb - 1] = stack[cb]
+		
+						-- Optimization:
+						--  Since we know that the next instruction is guaranteed to be a jump,
+						--  we can implement it here to avoid an extra iteration of the loop.
+						--
+						-- TODO: Should we verify that the next instruction is indeed a JMP?
+						local nextInstruction = code[pc + 1]
+						local jumpDistance = nextInstruction[3]
+						pc = pc + 1 + jumpDistance
+					else
+						-- Otherwise, skip the next instruction.
+						-- (Should be the jump back to the loop start.)
+						pc = pc + 1
+					end
+		
+					-- OP_SETLIST [A, B, C]    R(A)[(C-1)*FPF+i] := R(A+i), 1 <= i <= B
+					-- Set a range of array elements in a table.
+				elseif opname == "SETLIST" then
+					local targetTable = stack[a]
+					if type(targetTable) ~= "table" then
+						error("SETLIST target is not a table")
+					end
+		
+					local len = b
+					if len == USE_CURRENT_TOP then
+						len = top - a - 1
+					end
+		
+					-- If C is 0, it indicates that the next instruction
+					-- contains the actual C value (not implemented here).
+					if c == 0 then
+						error("SETLIST with C=0 is not supported in this VM implementation")
+					end
+		
+					local offset = (c - 1) * FIELDS_PER_FLUSH
+					for i = 1, len do
+						targetTable[offset + i] = stack[a + i]
+					end
+		
+					-- OP_CLOSE [A]    close all variables in the stack up to (>=) R(A)
+				elseif opname == "CLOSE" then
+					for i = a, maxUpvalue do
+						local uv = upvalueStack[i]
+						if uv then
+							uv.stack = { stack[uv.index] }
+							uv.index = 1
+							upvalueStack[i] = nil
+						end
+					end
+					maxUpvalue = a - 1
+		
+					-- OP_CLOSURE [A, Bx]    R(A) := closure(KPROTO[Bx], R(A), ... ,R(A+n))
+					-- Create a new closure (function) and store it in a register.
+				elseif opname == "CLOSURE" then
+					local tProto = proto.protos[b + 1]
+					local tProtoUpvalues = {}
+		
+					-- Capture upvalues for the new closure.
+					-- These are pseudo-instructions, and we need to skip
+					-- over them while processing the CLOSURE instruction.
+					for _ = 1, #tProto.upvalues do
+						pc = pc + 1
+		
+						local pseudoInstruction = code[pc]
+						local nextOpname = pseudoInstruction[1]
+						local index = pseudoInstruction[3]
+						if nextOpname == "MOVE" then
+							local upvalue = upvalueStack[index] or {
+								index = index,
+								stack = stack,
+							}
+							upvalueStack[index] = upvalue
+							if index > maxUpvalue then
+								maxUpvalue = index
+							end
+							table.insert(tProtoUpvalues, upvalue)
+						elseif nextOpname == "GETUPVAL" then
+							local upvalue = upvalues[index + 1]
+							table.insert(tProtoUpvalues, upvalue)
+						else
+							error(
+								"Unexpected instruction while capturing upvalues: "
+									.. tostring(nextOpname)
+							)
+						end
+					end
+		
+					local tClosure = {
+						env      = _G,
+						proto    = tProto,
+						upvalues = tProtoUpvalues,
+					}
+		
+					stack[a] = function(...)
+						self:pushClosure(tClosure)
+						local nReturns, returns = pack(self:executeClosure(...))
+						self:pushClosure(closure)
+		
+						return unpack(returns, 1, nReturns)
+					end
+		
+					-- OP_VARARG [A, B]    R(A), R(A+1), ..., R(A+B-1) = vararg
+					-- Load vararg function arguments into registers.
+				elseif opname == "VARARG" then
+					local upperBound = b - 1
+					if b == USE_CURRENT_TOP then
+						top = a + varargLen
+						upperBound = top
+					end
+		
+					for i = 1, upperBound do
+						stack[a + i - 1] = vararg[i]
+					end
+				else
+					error("Unimplemented instruction: " .. tostring(opname))
+				end
+		
+				-- Advance to the next instruction.
+				pc = pc + 1
+			end
+		end
+		
+		function VirtualMachine:execute()
+			-- Push main closure.
+			self:pushClosure({
+				env      = _G,
+				proto    = self.mainProto,
+				upvalues = {},
+			})
+		
+			return self:executeClosure()
+		end
+		
+		--// Low-Level Shortcuts (Step-by-Step) //--
+		
+		-- Code (string) -> Tokens (list)
+		local function tokenize(code)
+			return Tokenizer.new(code):tokenize()
+		end
+		
+		-- Tokens (list) -> AST (table)
+		local function parseTokens(tokens)
+			return Parser.new(tokens):parse()
+		end
+		
+		-- AST (table) -> Proto (table)
+		local function generate(ast)
+			return CodeGenerator.new(ast):generate()
+		end
+		
+		-- Proto (table) -> Bytecode (string)
+		local function emit(proto)
+			return BytecodeEmitter.new(proto):emit()
+		end
+		
+		-- Proto (table) -> Execution (results...)
+		local function execute(proto)
+			return VirtualMachine.new(proto):execute()
+		end
+		
+		--// High-Level Shortcuts (Pipelines) //--
+		
+		-- Code -> AST
+		local function parse(code)
+			return parseTokens(tokenize(code))
+		end
+		
+		-- Code -> Proto
+		local function compileToProto(code)
+			return generate(parse(code))
+		end
+		
+		-- Code -> Bytecode
+		local function compile(code)
+			return emit(compileToProto(code))
+		end
+		
+		-- Code -> Execution
+		local function run(code)
+			return execute(compileToProto(code))
+		end
+		
+		-- Now I'm just exporting everything...
+		return {
+			-- ████████╗  ██╗        ██████╗
+			-- ╚══██╔══╝  ██║       ██╔════╝
+			--    ██║     ██║       ██║
+			--    ██║     ██║       ██║
+			--    ██║     ███████╗  ╚██████╗
+			--    ╚═╝     ╚══════╝   ╚═════╝
+			--       Tiny Lua Compiler
+			--          MIT License
+		
+			Tokenizer       = Tokenizer,
+			Parser          = Parser,
+			CodeGenerator   = CodeGenerator,
+			BytecodeEmitter = BytecodeEmitter,
+			VirtualMachine  = VirtualMachine,
+		
+			-- Legacy API (Deprecated, kept for backward compatibility)
+			fullCompile   = compile,
+			compileAndRun = run,
+		
+			-- Standard API (High-Level)
+			-- Takes code and returns the desired output directly.
+			tokenize       = tokenize,       -- Code -> Tokens
+			parse          = parse,          -- Code -> AST
+			compileToProto = compileToProto, -- Code -> Proto
+			compile        = compile,        -- Code -> Bytecode
+			run            = run,            -- Code -> Execution
+		
+			-- Low-Level API (Step-by-Step)
+			-- Takes the previous stage's output as input.
+			parseTokens = parseTokens, -- Tokens -> AST
+			generate    = generate,    -- AST    -> Proto
+			emit        = emit,        -- Proto  -> Bytecode
+			execute     = execute,     -- Proto  -> Execution
+		}
+	end
+	fake_module_scripts[script] = module_script
+end
